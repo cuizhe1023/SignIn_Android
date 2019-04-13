@@ -6,12 +6,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.nuc.signin_android.MainActivity;
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseActivity;
-import com.nuc.signin_android.net.SendDataToService;
 import com.nuc.signin_android.net.tools.MyAsyncTask;
 import com.nuc.signin_android.net.tools.TaskListener;
 import com.nuc.signin_android.utils.Constant;
@@ -51,7 +49,7 @@ public class TeacherRegisterActivity extends BaseActivity {
     }
 
     @OnClick(R.id.back_teacher_register_image)
-    private void onBackRegister(){
+    public void onBackRegister(){
         activity.finish();
     }
 
@@ -75,10 +73,17 @@ public class TeacherRegisterActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 进行注册
+     *
+     * @param account 工号
+     * @param name 名称
+     * @param password 密码
+     */
     private void register(String account, String name, String password) {
 
-        String registerUrlStr = Constant.URL_REGISTER_TEACHER + "?TeacherId=" + account +
-                "&TeacherName=" +name+"&TeacherPassword=" + password;
+        String registerUrlStr = Constant.URL_TEACHER_REGISTER + "?teacherId=" + account +
+                "&teacherName=" +name+"&teacherPassword=" + password;
 
         Log.e("register", "url:" + registerUrlStr);
         new MyAsyncTask(TeacherRegisterActivity.this, new TaskListener() {
@@ -93,9 +98,9 @@ public class TeacherRegisterActivity extends BaseActivity {
                     startActivity(intent);
                     finish();
                 }else if (s.equals("该账号已注册，请使用此账号直接登录或使用其他账号注册")){
-                    ToastUtil.showToast(TeacherRegisterActivity.this,"注册成功");
+                    ToastUtil.showToast(TeacherRegisterActivity.this,"该账号已注册，请使用此账号直接登录或使用其他账号注册");
                 }else {
-                    ToastUtil.showToast(TeacherRegisterActivity.this,"注册成功");
+                    ToastUtil.showToast(TeacherRegisterActivity.this,"连接异常");
                 }
             }
         }).execute(registerUrlStr);

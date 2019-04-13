@@ -1,6 +1,7 @@
 package com.nuc.signin_android.net.tools;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -11,6 +12,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * @Author: cuizhe
@@ -46,7 +48,10 @@ public class MyAsyncTask  extends AsyncTask<String, Integer, String> {
         HttpURLConnection connection = null;
         StringBuilder response = new StringBuilder();
         try {
-            URL url = new URL(params[0]); // 声明一个URL,注意如果用百度首页实验，请使用https开头，否则获取不到返回报文
+            String result = Uri.encode(params[0], "-![.:/,%?&=]");// 对 url 进行转码
+            Log.d("url!!!!!", "doInBackground: " + result);
+            Log.i("uri", "doInBackground: " + result);
+            URL url = new URL(result); // 声明一个URL,注意如果用百度首页实验，请使用https开头，否则获取不到返回报文
             connection = (HttpURLConnection) url.openConnection(); // 打开该URL连接
             connection.setRequestMethod("GET"); // 设置请求方法，“POST或GET”，我们这里用GET，在说到POST的时候再用POST
             connection.setConnectTimeout(80000); // 设置连接建立的超时时间

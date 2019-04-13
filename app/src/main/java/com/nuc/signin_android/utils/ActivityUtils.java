@@ -3,6 +3,7 @@ package com.nuc.signin_android.utils;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 /**
  * @Author: cuizhe
@@ -10,6 +11,8 @@ import android.support.v4.app.FragmentTransaction;
  * @Description:
  */
 public class ActivityUtils {
+    private static final String TAG = "ActivityUtils";
+
     /**
      * 替换 fragment
      *
@@ -23,5 +26,6 @@ public class ActivityUtils {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(frmeId,fragment);
         fragmentTransaction.commit();
+        Log.i(TAG, "replaceFragmentToActivity: 替换成功：" + fragment.toString() + " to fragment");
     }
 }

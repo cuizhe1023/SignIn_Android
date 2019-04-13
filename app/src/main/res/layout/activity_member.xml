@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.administrator.wclass.classFuture.inner.member.MemberActivity">
+    tools:context="com.nuc.signin_android.classroom.course.member.MemberActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_signed"
@@ -20,7 +20,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_centerVertical="true"
                 android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_height="30dp"
+                tools:ignore="VectorDrawableCompat" />
             <TextView
                 android:textStyle="bold"
                 android:textColor="@color/colorWhite"

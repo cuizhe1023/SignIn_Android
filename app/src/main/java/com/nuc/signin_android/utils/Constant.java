@@ -13,7 +13,18 @@ public class Constant {
     public static final int CODE_SUCCESS = 1;//连接成功
     public static final int CODE_UNKNOWN_HOST = 2;//错误-未知的host
 
-    public static String URL = "http://10.0.116.44:8080/"; // IP地址请改为你自己的IP
-    public static String URL_REGISTER_TEACHER = URL + "doRegist";
-    public static String URL_TEACHER_LOGIN = URL + "doLogin";
+    public static String URL = "http://10.0.116.44:8080"; // IP地址请改为你自己的IP
+    public static String TEACHER = "/teacher";
+    public static String STUDENT = "/student";
+
+    public static String URL_TEACHER_REGISTER = URL + TEACHER +"/register";
+    public static String URL_TEACHER_LOGIN = URL + TEACHER +"/login";
+
+    public static String URL_STUDENT_REGISTER = URL + STUDENT +"/register";
+    public static String URL_STUDENT_LOGIN = URL + STUDENT +"/login";
+
+    public static String URL_TEACHER_GETONE = URL + TEACHER + "/findById";
+    public static String URL_STUDENT_GETONE = URL + STUDENT+ "/findById";
+
+
 }

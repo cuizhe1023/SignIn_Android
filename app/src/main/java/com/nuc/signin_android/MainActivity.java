@@ -6,29 +6,30 @@ import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.nuc.signin_android.about.MyselfFragment;
 import com.nuc.signin_android.base.BaseActivity;
+import com.nuc.signin_android.classroom.ClassFragment;
 import com.nuc.signin_android.utils.ActivityUtils;
-import com.nuc.signin_android.utils.BottomNavigationViewHelper;
 
-import butterknife.BindView;
 
 public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
-    @BindView(R.id.bottom_menu)
-    BottomNavigationView bottomMenu;
+    BottomNavigationView bottomMenu = null;
 
     @Override
     protected void logicActivity(Bundle savedInstanceState) {
-        // 保存 APP 状态，防止被回收
+        // 保存 APP 状态
         if (savedInstanceState != null){
             Log.i(TAG, "logicActivity: " + savedInstanceState.getInt("bottom_id"));
             showFragment(savedInstanceState.getInt("bottom_id"));
         }else {
             //进行 fragment 替换，加载主界面
-
+            Log.i(TAG, "logicActivity: savedInstanceState is null");
+            ActivityUtils.replaceFragmentToActivity(fragmentManager, ClassFragment.getInstance(),R.id.main_frame);
         }
-        BottomNavigationViewHelper.disableShiftMode(bottomMenu);
+
+        bottomMenu = findViewById(R.id.bv_bottomNavigation);
         bottomMenu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -51,10 +52,10 @@ public class MainActivity extends BaseActivity {
     private void showFragment(int bottom_id) {
         switch (bottom_id){
             case R.id.bottom_menu_class:
-
+                ActivityUtils.replaceFragmentToActivity(fragmentManager, ClassFragment.getInstance(),R.id.main_frame);
                 break;
             case R.id.bottom_menu_about:
-
+                ActivityUtils.replaceFragmentToActivity(fragmentManager, MyselfFragment.getInstance(),R.id.main_frame);
                 break;
         }
     }

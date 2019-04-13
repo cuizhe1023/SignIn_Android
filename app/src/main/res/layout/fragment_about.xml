@@ -42,7 +42,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center|left"
             android:maxLines="1"
-            android:text="崔哲"
+            android:text="请先登录"
             android:textColor="#000000"
             android:textSize="20sp" />
 
@@ -53,7 +53,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/me_name"
             android:gravity="center|left"
-            android:text="中北大学 物联网工程"
+            android:text=""
             android:textSize="15sp"
             tools:ignore="RtlCompat" />
 
@@ -64,7 +64,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
             android:src="@drawable/me_right"
-            tools:ignore="RtlCompat" />
+            tools:ignore="RtlCompat,VectorDrawableCompat" />
     </RelativeLayout>
 
     <LinearLayout

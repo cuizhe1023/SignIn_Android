@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
-            android:id="@+id/back_register_image"
+            android:id="@+id/back_student_register_image"
             android:padding="5dp"
             android:layout_width="40dp"
             android:layout_height="40dp"

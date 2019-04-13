@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#ffff</color>
     <color name="colorSpiltWhite">#d4d4d4</color>
+    <color name="write">#ffffff</color>
+    <color name="theme">#03A9F4</color>
+    <color name="bottom_navigation_normal">#CCCCCC</color>
 </resources>
