@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.nuc.signin_android.utils.net.OkHttpUtil;
+
 import butterknife.ButterKnife;
 
 /**
@@ -34,6 +36,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutView());
         ButterKnife.bind(this);
+
+        // 调用 OkHttpUtil
+        OkHttpUtil.init();
 
         // 通过 SharedPreferences 存储和获取用户信息
         pref = getSharedPreferences("setting",MODE_PRIVATE);

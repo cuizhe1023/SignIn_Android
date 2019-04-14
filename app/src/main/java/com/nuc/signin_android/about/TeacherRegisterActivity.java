@@ -10,10 +10,13 @@ import android.widget.ImageView;
 import com.nuc.signin_android.MainActivity;
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseActivity;
+import com.nuc.signin_android.net.PostApi;
 import com.nuc.signin_android.net.tools.MyAsyncTask;
 import com.nuc.signin_android.net.tools.TaskListener;
 import com.nuc.signin_android.utils.Constant;
 import com.nuc.signin_android.utils.ToastUtil;
+import com.nuc.signin_android.utils.net.ApiListener;
+import com.nuc.signin_android.utils.net.ApiUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -66,7 +69,7 @@ public class TeacherRegisterActivity extends BaseActivity {
             if (!teacherPassword.equals(teacherRePassword)){
                 ToastUtil.showToast(this,"两次密码不相同");
             }else {
-                register(teacherId,teacherName,teacherPassword);
+                registerTeacher(teacherId,teacherName,teacherPassword);
             }
         }else {
             ToastUtil.showToast(this,"账号、密码都不能为空！");
@@ -104,6 +107,27 @@ public class TeacherRegisterActivity extends BaseActivity {
                 }
             }
         }).execute(registerUrlStr);
+    }
+
+    private void registerTeacher(String account, String name, String password) {
+
+        new PostApi(Constant.URL_TEACHER_REGISTER,account,name,password).post(new ApiListener() {
+            @Override
+            public void success(ApiUtil apiUtil) {
+                /**
+                 * 执行成功的逻辑
+                 */
+                Log.i(TAG, "success: 注册成功");
+            }
+
+            @Override
+            public void failure(ApiUtil apiUtil) {
+                /**
+                 * 执行请求失败的逻辑
+                 */
+                Log.i(TAG, "failure: 该账号已被注册！");
+            }
+        });
     }
 
 

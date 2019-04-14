@@ -2,7 +2,6 @@ package com.nuc.signin_android.about;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -15,15 +14,18 @@ import android.widget.TextView;
 
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseActivity;
-import com.nuc.signin_android.entity.Student;
-import com.nuc.signin_android.entity.Teacher;
+import com.nuc.signin_android.net.GetApi;
 import com.nuc.signin_android.net.tools.MyAsyncTask;
 import com.nuc.signin_android.net.tools.TaskListener;
 import com.nuc.signin_android.utils.Constant;
 import com.nuc.signin_android.utils.ToastUtil;
+import com.nuc.signin_android.utils.net.ApiListener;
+import com.nuc.signin_android.utils.net.ApiUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnCheckedChanged;
@@ -50,6 +52,8 @@ public class LoginActivity extends BaseActivity {
     EditText userPassword;
 
     private AlertDialog identity_register;
+
+    HashMap<String,String> params = new HashMap<>();
 
     private String identity = "";
     @Override
@@ -93,11 +97,11 @@ public class LoginActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(srtId) && !TextUtils.isEmpty(strPassword)){
                     Log.i(TAG, "onClick: identity=" + identity);
                     if (identity.equals("teacher")){
-                        teacherLogin(srtId,strPassword);
+                        getTeacher(srtId,strPassword);
                         Log.i(TAG, "onClick: 教师登陆");
                     }
                     if (identity.equals("student")){
-                        studentLogin(srtId,strPassword);
+                        getStudent(srtId,strPassword);
                         Log.i(TAG, "onClick: 学生登录");
                     }
                 }
@@ -151,6 +155,23 @@ public class LoginActivity extends BaseActivity {
         }).execute(loginUrlStr);
     }
 
+    private void getTeacher(String id, String password){
+
+        params.put("teacherId",id);
+        params.put("teacherPassword",password);
+
+        new GetApi(Constant.URL_TEACHER_LOGIN,params).get(new ApiListener() {
+            @Override
+            public void success(ApiUtil apiUtil) {
+                Log.i(TAG, "success: 老师登录成功");
+            }
+
+            @Override
+            public void failure(ApiUtil apiUtil) {
+                Log.i(TAG, "failure: 老师登录失败");
+            }
+        });
+    }
     /**
      * 学生信息的处理
      *
@@ -197,6 +218,24 @@ public class LoginActivity extends BaseActivity {
                 }
             }
         }).execute(loginUrlStr);
+    }
+
+    private void getStudent(String id, String password){
+
+        params.put("studentId",id);
+        params.put("studentPassword",password);
+
+        new GetApi(Constant.URL_STUDENT_LOGIN,params).get(new ApiListener() {
+            @Override
+            public void success(ApiUtil apiUtil) {
+                Log.i(TAG, "success: 学生登录成功");
+            }
+
+            @Override
+            public void failure(ApiUtil apiUtil) {
+                Log.i(TAG, "failure: 学生登录失败");
+            }
+        });
     }
 
     @Override
