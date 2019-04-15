@@ -1,5 +1,7 @@
 package com.nuc.signin_android.utils.net;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -18,6 +20,10 @@ import okhttp3.RequestBody;
 public class OkHttpUtil {
 
     private static OkHttpClient mOkHttpClient = null;
+
+    public enum REQUEST_TYPE{
+        POST,PUT,DELECT
+    }
 
     public static void init(){
         if (mOkHttpClient == null){
@@ -43,9 +49,7 @@ public class OkHttpUtil {
 
             if (params != null){
                 for (String key:params.keySet()) {
-                    System.out.println("++++++++++++++++++ *get*  +++++++++++++++++++");
-                    System.out.println("key:" + key + ",value:" + params.get(key));
-                    System.out.println("++++++++++++++++++ *get*  +++++++++++++++++++");
+                    Log.e("GET>>>>>>>>>>>>>", "key="+key+",value="+params.get(key));
                     urlBuilder.setQueryParameter(key,params.get(key));
                 }
             }
@@ -58,24 +62,35 @@ public class OkHttpUtil {
     }
 
     /**
-     * 封装的 post 请求
+     * 封装的 sendRequest 请求
      *
      * @param url URL
      * @param okHttpCallBack 回调
      */
-    public static void post(String url, OkHttpCallBack okHttpCallBack, HashMap<String,String> bodyMap){
+    public static void sendRequest(String url, OkHttpCallBack okHttpCallBack,
+                                   HashMap<String,String> bodyMap,
+                                   REQUEST_TYPE type){
         Call call = null;
         try {
             FormBody.Builder builder = new FormBody.Builder();
-            for (HashMap.Entry<String, String> entry:
+            for (HashMap.Entry<String, String> key:
                     bodyMap.entrySet()) {
-                System.out.println("++++++++++++++++++++++++++++++++++++++++++");
-                System.out.println("key:" + entry + ",value:" + bodyMap.get(entry));
-                System.out.println("++++++++++++++++++++++++++++++++++++++++++");
-                builder.add(entry.getKey(),entry.getValue());
+                Log.e("sendRequest>>>>>>>>" + type, "key="+key+",value="+bodyMap.get(key));
+                builder.add(key.getKey(),key.getValue());
             }
             RequestBody body = builder.build();
-            Request request = new Request.Builder().post(body).url(url).build();
+            Request request = null;
+            switch (type){
+                case POST:
+                    request = new Request.Builder().post(body).url(url).build();
+                    break;
+                case PUT:
+                    request = new Request.Builder().put(body).url(url).build();
+                    break;
+                case DELECT:
+                    request = new Request.Builder().post(body).url(url).build();
+                    break;
+            }
             call = mOkHttpClient.newCall(request);
             call.enqueue(okHttpCallBack);// 异步调用
         } catch (Exception e) {

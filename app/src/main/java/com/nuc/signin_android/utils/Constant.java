@@ -17,14 +17,24 @@ public class Constant {
     public static String TEACHER = "/teacher";
     public static String STUDENT = "/student";
 
+    // http://10.0.116.44:8080/teacher/register
     public static String URL_TEACHER_REGISTER = URL + TEACHER +"/register";
+
+    // http://10.0.116.44:8080/teacher/login
     public static String URL_TEACHER_LOGIN = URL + TEACHER +"/login";
 
+    // http://10.0.116.44:8080/teacher/findById
+    public static String URL_TEACHER_GETONE = URL + TEACHER + "/findById";
+
+    // http://10.0.116.44:8080/student/register
     public static String URL_STUDENT_REGISTER = URL + STUDENT +"/register";
+
+    // http://10.0.116.44:8080/student/login
     public static String URL_STUDENT_LOGIN = URL + STUDENT +"/login";
 
-    public static String URL_TEACHER_GETONE = URL + TEACHER + "/findById";
+    // http://10.0.116.44:8080/student/findById
     public static String URL_STUDENT_GETONE = URL + STUDENT+ "/findById";
 
-
+    // http://10.0.116.44:8080/student/updateSN
+    public static String URL_STUDENT_UPDATESN = URL + STUDENT + "/updateSN";
 }

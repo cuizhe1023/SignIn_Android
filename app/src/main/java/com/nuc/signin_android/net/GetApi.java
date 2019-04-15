@@ -13,12 +13,12 @@ import java.util.HashMap;
  */
 public class GetApi extends ApiUtil {
 
-    public String mResponse;
+    public JSONObject mJson;
     private String mUrl;
 
-    public GetApi(String mUrl, HashMap<String,String> getParamsMap) {
+    public GetApi(String mUrl, HashMap<String,String> paramsMap) {
         this.mUrl = mUrl;
-        params = getParamsMap;
+        params = paramsMap;
     }
 
     @Override
@@ -28,6 +28,6 @@ public class GetApi extends ApiUtil {
 
     @Override
     protected void parseData(JSONObject jsonObject) throws Exception {
-        mResponse = jsonObject.toString();
+        mJson = jsonObject;
     }
 }

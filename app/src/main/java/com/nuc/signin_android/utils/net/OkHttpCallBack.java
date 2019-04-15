@@ -36,18 +36,22 @@ public abstract class OkHttpCallBack implements Callback {
                         if (object != null){
                             onSuccess(call,object,response.code());
                         }else {
+                            Log.e(TAG, "onResponse: object == null");
                             onFailure(call,null);
                         }
                     }else {
+                        Log.e(TAG, "onResponse: response.body().string().trim() is isEmpty");
                         onFailure(call,null);
                     }
                 }else {
+                    Log.e(TAG, "onResponse: response.body == null" );
                     onFailure(call,null);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }else {
+            Log.e(TAG, "onResponse: isSuccessful is false" );
             onFailure(call,null);
         }
     }

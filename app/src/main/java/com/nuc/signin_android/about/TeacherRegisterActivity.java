@@ -18,6 +18,8 @@ import com.nuc.signin_android.utils.ToastUtil;
 import com.nuc.signin_android.utils.net.ApiListener;
 import com.nuc.signin_android.utils.net.ApiUtil;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -40,6 +42,7 @@ public class TeacherRegisterActivity extends BaseActivity {
     EditText password;
     @BindView(R.id.input_teacher_repassword)
     EditText rePassword;
+    private HashMap<String,String> params = new HashMap<>();
 
     @Override
     protected void logicActivity(Bundle savedInstanceState) {
@@ -83,49 +86,35 @@ public class TeacherRegisterActivity extends BaseActivity {
      * @param name 名称
      * @param password 密码
      */
-    private void register(String account, String name, String password) {
-
-        String registerUrlStr = Constant.URL_TEACHER_REGISTER + "?teacherId=" + account +
-                "&teacherName=" +name+"&teacherPassword=" + password;
-
-        Log.e("register", "url:" + registerUrlStr);
-        new MyAsyncTask(TeacherRegisterActivity.this, new TaskListener() {
-            @Override
-            public void onCompletedListener(Object result) {
-                String s = (String) result;
-                Log.e("register", "onCompletedListener: " + s);
-
-                if (s.equals("注册成功")){
-                    ToastUtil.showToast(TeacherRegisterActivity.this,"注册成功");
-                    Intent intent = new Intent(TeacherRegisterActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }else if (s.equals("该账号已注册，请使用此账号直接登录或使用其他账号注册")){
-                    ToastUtil.showToast(TeacherRegisterActivity.this,"该账号已注册，请使用此账号直接登录或使用其他账号注册");
-                }else {
-                    ToastUtil.showToast(TeacherRegisterActivity.this,"连接异常");
-                }
-            }
-        }).execute(registerUrlStr);
-    }
-
     private void registerTeacher(String account, String name, String password) {
 
-        new PostApi(Constant.URL_TEACHER_REGISTER,account,name,password).post(new ApiListener() {
+        params.put("teacherId",account);
+        params.put("teacherName",name);
+        params.put("teacherPassword",password);
+
+
+        new PostApi(Constant.URL_TEACHER_REGISTER,params).post(new ApiListener() {
             @Override
             public void success(ApiUtil apiUtil) {
-                /**
-                 * 执行成功的逻辑
-                 */
-                Log.i(TAG, "success: 注册成功");
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.showToast(TeacherRegisterActivity.this,"注册成功");
+                        Intent intent = new Intent(TeacherRegisterActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
             }
 
             @Override
             public void failure(ApiUtil apiUtil) {
-                /**
-                 * 执行请求失败的逻辑
-                 */
-                Log.i(TAG, "failure: 该账号已被注册！");
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.showToast(TeacherRegisterActivity.this,"注册失败!");
+                    }
+                });
             }
         });
     }

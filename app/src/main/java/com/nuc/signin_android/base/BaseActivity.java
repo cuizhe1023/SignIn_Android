@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -30,6 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected SharedPreferences.Editor editor;
     protected String userId;
     protected String identity;
+    protected Handler mainHandler = new Handler();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

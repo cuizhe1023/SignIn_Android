@@ -11,20 +11,17 @@ import android.widget.ImageView;
 import com.nuc.signin_android.MainActivity;
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseActivity;
-import com.nuc.signin_android.net.tools.MyAsyncTask;
-import com.nuc.signin_android.net.tools.TaskListener;
+import com.nuc.signin_android.net.PostApi;
 import com.nuc.signin_android.utils.Constant;
 import com.nuc.signin_android.utils.ToastUtil;
+import com.nuc.signin_android.utils.device.DeviceUtils;
+import com.nuc.signin_android.utils.net.ApiListener;
+import com.nuc.signin_android.utils.net.ApiUtil;
 
-import java.io.IOException;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 /**
  * @Author: cuizhe
@@ -51,6 +48,7 @@ public class StudentRegisterActivity extends BaseActivity {
     EditText sex;
     @BindView(R.id.btn_student_register)
     Button register;
+    private HashMap<String,String> params = new HashMap<>();
 
     @Override
     protected void logicActivity(Bundle savedInstanceState) {
@@ -83,57 +81,45 @@ public class StudentRegisterActivity extends BaseActivity {
             if (!studentPassword.equals(studentRePassword)){
                 ToastUtil.showToast(this,"两次密码不相同");
             }else {
-                register(studentId,studentName,studentPassword,classId,gender);
+                registerTeacher(studentId,studentName,studentPassword,classId,gender,DeviceUtils.getDeviceId());
             }
         }
     }
 
-    private void register(String studentId, String studentName,
-                          String studentPassword, String classId, String gender) {
+    private void registerTeacher(String studentId, String studentName,
+                                 String studentPassword, String classId,
+                                 String gender, String serialNumber) {
 
-        String registerUrlStr = Constant.URL_STUDENT_REGISTER + "?studentId="+studentId
-                + "&studentName=" + studentName + "&studentPassword=" + studentPassword
-                + "&classId="+ classId +"&gender=" + gender;
-        Log.e(TAG, "register: url = "+registerUrlStr);
+        params.put("studentId",studentId);
+        params.put("studentName",studentName);
+        params.put("studentPassword",studentPassword);
+        params.put("classId",classId);
+        params.put("gender",gender);
+        params.put("serialNumber",serialNumber);
 
-        new MyAsyncTask(StudentRegisterActivity.this, new TaskListener() {
+        new PostApi(Constant.URL_STUDENT_REGISTER,params).post(new ApiListener() {
             @Override
-            public void onCompletedListener(Object result) {
-                String s = (String) result;
-                Log.e("register", "onCompletedListener: " + s);
-
-                if (s.equals("注册成功")){
-                    ToastUtil.showToast(StudentRegisterActivity.this,"注册成功");
-                    Intent intent = new Intent(StudentRegisterActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }else if (s.equals("该账号已注册，请使用此账号直接登录或使用其他账号注册")){
-                    ToastUtil.showToast(StudentRegisterActivity.this,"该账号已注册，请使用此账号直接登录或使用其他账号注册");
-                }else {
-                    ToastUtil.showToast(StudentRegisterActivity.this,"连接异常");
-                }
+            public void success(ApiUtil apiUtil) {
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.showToast(StudentRegisterActivity.this,"注册成功");
+                        Intent intent = new Intent(StudentRegisterActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
             }
-        }).execute(registerUrlStr);
 
-        // OkHttp 请求
-//        try {
-//            OkHttpClient client = new OkHttpClient();
-//            RequestBody requestBody = new FormBody.Builder()
-//                    .add("studentId",studentId)
-//                    .add("studentName",studentName)
-//                    .add("studentPassword",studentPassword)
-//                    .add("classId",classId)
-//                    .add("gender",gender)
-//                    .build();
-//            Request request = new Request.Builder()
-//                    .url(Constant.URL)
-//                    .post(requestBody)
-//                    .build();
-//            Response response = client.newCall(request).execute();
-//            String responseData = response.body().string();
-//            Log.i(TAG, "register: " + responseData);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+            @Override
+            public void failure(ApiUtil apiUtil) {
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.showToast(StudentRegisterActivity.this,"注册失败!");
+                    }
+                });
+            }
+        });
     }
 }

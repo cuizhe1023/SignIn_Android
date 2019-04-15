@@ -15,6 +15,7 @@ import okhttp3.Call;
  * @Description: 统一处理服务端的回调
  */
 public abstract class ApiUtil {
+    private static final String TAG = "ApiUtil";
 
     private ApiListener mApiListener = null;
 
@@ -62,16 +63,30 @@ public abstract class ApiUtil {
         OkHttpUtil.get(getUrl(),mSendListener,params);
     }
 
-    public void addParams(String key, String value){
-        params.put(key,value);
-    }
-
     /**
      * 发送 post 请求
      * @param listener
      */
     public void post(ApiListener listener){
         mApiListener = listener;
-        OkHttpUtil.post(getUrl(),mSendListener,params);
+        OkHttpUtil.sendRequest(getUrl(),mSendListener,params,OkHttpUtil.REQUEST_TYPE.POST);
+    }
+
+    /**
+     * 发送 put 请求
+     * @param listener
+     */
+    public void put(ApiListener listener){
+        mApiListener = listener;
+        OkHttpUtil.sendRequest(getUrl(),mSendListener,params,OkHttpUtil.REQUEST_TYPE.PUT);
+    }
+
+    /**
+     * 发送 delete 请求
+     * @param listener
+     */
+    public void delect(ApiListener listener){
+        mApiListener = listener;
+        OkHttpUtil.sendRequest(getUrl(),mSendListener,params,OkHttpUtil.REQUEST_TYPE.DELECT);
     }
 }
