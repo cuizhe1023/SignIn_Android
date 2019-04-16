@@ -69,18 +69,18 @@ public class OkHttpUtil {
      */
     public static void sendRequest(String url, OkHttpCallBack okHttpCallBack,
                                    HashMap<String,String> bodyMap,
-                                   REQUEST_TYPE type){
+                                   REQUEST_TYPE requestType){
         Call call = null;
         try {
             FormBody.Builder builder = new FormBody.Builder();
             for (HashMap.Entry<String, String> key:
                     bodyMap.entrySet()) {
-                Log.e("sendRequest>>>>>>>>" + type, "key="+key+",value="+bodyMap.get(key));
+                Log.e("sendRequest>>>>>>>>" + requestType, "key="+key+",value="+bodyMap.get(key));
                 builder.add(key.getKey(),key.getValue());
             }
             RequestBody body = builder.build();
             Request request = null;
-            switch (type){
+            switch (requestType){
                 case POST:
                     request = new Request.Builder().post(body).url(url).build();
                     break;

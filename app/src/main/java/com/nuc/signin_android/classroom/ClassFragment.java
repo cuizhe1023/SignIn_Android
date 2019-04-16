@@ -55,13 +55,6 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
                 .setIconPressedColor(0xffbf360c)
                 .setWrapper(0)
         );
-        items.add(new RFACLabelItem<Integer>()
-                .setLabel("使用微课号加入微课")
-                .setResId(R.drawable.ic_add_black_24dp)
-                .setIconNormalColor(0xffd84315)
-                .setIconPressedColor(0xffbf360c)
-                .setWrapper(1)
-        );
         rfaContent
                 .setItems(items)
                 .setIconShadowRadius(5)
@@ -100,12 +93,8 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
     private void startActivityByPosition(int position) {
         if (position == 0){
             Log.i(TAG, "startActivityByPosition: 创建课堂");
-//            Intent intent = new Intent(getContext(), CreateClassActivity.class);
-//            startActivity(intent);
-        }else {
-            Log.i(TAG, "startActivityByPosition: 加入课堂");
-//            Intent intent = new Intent(getContext(), JoinClassActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(getContext(), CreateCourseActivity.class);
+            startActivity(intent);
         }
     }
 

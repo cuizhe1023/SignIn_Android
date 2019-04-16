@@ -30,7 +30,6 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-
 /**
  * @Author: cuizhe
  * @Date: 2019/4/10 21:01
@@ -52,9 +51,10 @@ public class LoginActivity extends BaseActivity {
     EditText userPassword;
 
     private AlertDialog identity_register;
-    HashMap<String,String> params = new HashMap<>();
+    private HashMap<String, String> params = new HashMap<>();
 
     private String identity = "";
+
     @Override
     protected void logicActivity(Bundle savedInstanceState) {
 
@@ -63,12 +63,12 @@ public class LoginActivity extends BaseActivity {
     /**
      * 在登录界面选择身份的方法
      */
-    @OnCheckedChanged({R.id.rdo_btn_teacher,R.id.rdo_btn_student})
-    public void onGetIdentityToLoginClicker(){
+    @OnCheckedChanged({R.id.rdo_btn_teacher, R.id.rdo_btn_student})
+    public void onGetIdentityToLoginClicker() {
         rdoIdentity.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.rdo_btn_teacher:
                         identity = "teacher";
                         break;
@@ -85,7 +85,7 @@ public class LoginActivity extends BaseActivity {
      * 登录按钮的处理
      */
     @OnClick(R.id.btn_login)
-    public void onLoginBtnClicker(){
+    public void onLoginBtnClicker() {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,15 +93,15 @@ public class LoginActivity extends BaseActivity {
                 String strPassword = userPassword.getText().toString();
                 Log.i(TAG, "onClick: " + srtId + "," + strPassword + " 请求登录.");
 
-                if (!TextUtils.isEmpty(srtId) && !TextUtils.isEmpty(strPassword)){
+                if (!TextUtils.isEmpty(srtId) && !TextUtils.isEmpty(strPassword)) {
                     Log.i(TAG, "onClick: identity=" + identity);
-                    if (identity.equals("teacher")){
-                        teacherLogin(srtId,strPassword);
+                    if (identity.equals("teacher")) {
+                        teacherLogin(srtId, strPassword);
                         Log.i(TAG, "onClick: 教师登陆");
                     }
-                    if (identity.equals("student")){
+                    if (identity.equals("student")) {
                         String sn = DeviceUtils.getDeviceId();
-                        studentLogin(srtId,strPassword,sn);
+                        studentLogin(srtId, strPassword, sn);
                         Log.i(TAG, "onClick: 学生登录");
                     }
                 }
@@ -112,15 +112,15 @@ public class LoginActivity extends BaseActivity {
     /**
      * 教师登录信息的处理
      *
-     * @param id 教师id
+     * @param id       教师id
      * @param password 密码
      */
-    private void teacherLogin(String id, String password){
+    private void teacherLogin(String id, String password) {
 
-        params.put("teacherId",id);
-        params.put("teacherPassword",password);
+        params.put("teacherId", id);
+        params.put("teacherPassword", password);
 
-        new GetApi(Constant.URL_TEACHER_LOGIN,params).get(new ApiListener() {
+        new GetApi(Constant.URL_TEACHER_LOGIN, params).get(new ApiListener() {
             @Override
             public void success(ApiUtil apiUtil) {
                 try {
@@ -128,22 +128,22 @@ public class LoginActivity extends BaseActivity {
                     JSONObject json = api.mJson;
 
                     Log.i(TAG, "onCompletedListener: "
-                            + "teacherId："+json.get("teacherId")
+                            + "teacherId：" + json.get("teacherId")
                             + "，teacherName：" + json.get("teacherName")
-                            + "，teacherPassword：" +json.get("teacherPassword"));
+                            + "，teacherPassword：" + json.get("teacherPassword"));
 
                     // 将登录的用户名存入 SharedPreferences
                     editor = pref.edit();
-                    editor.putString("account",(String) json.get("teacherId"));
-                    editor.putString("identity",identity);
-                    editor.putString("name",(String) json.get("teacherName"));
-                    editor.putString("password",(String) json.get("teacherPassword"));
+                    editor.putString("account", (String) json.get("teacherId"));
+                    editor.putString("identity", identity);
+                    editor.putString("name", (String) json.get("teacherName"));
+                    editor.putString("password", (String) json.get("teacherPassword"));
                     editor.apply();
 
                     mainHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            ToastUtil.showToast(LoginActivity.this,"登陆成功，欢迎" + pref.getString("name",null));
+                            ToastUtil.showToast(LoginActivity.this, "登陆成功，欢迎" + pref.getString("name", null));
                         }
                     });
                     finish();
@@ -157,7 +157,7 @@ public class LoginActivity extends BaseActivity {
                 mainHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showToast(LoginActivity.this,"登陆成功，欢迎" + pref.getString("name",null));
+                        ToastUtil.showToast(LoginActivity.this, "请检查用户名和密码是否正确！");
                     }
                 });
             }
@@ -165,61 +165,23 @@ public class LoginActivity extends BaseActivity {
         params = null;
         params = new HashMap<>();
     }
+
     /**
      * 学生信息的处理
      *
-     * @param id 学生id
+     * @param id       学生id
      * @param password 密码
      */
-    private void studentLogin(String id, String password,String sn){
+    private void studentLogin(String id, String password, String sn) {
 
-        params.put("studentId",id);
-        params.put("studentPassword",password);
-        params.put("serialNumber",sn);
+        params.put("studentId", id);
+        params.put("studentPassword", password);
+        params.put("serialNumber", sn);
 
-        new GetApi(Constant.URL_STUDENT_LOGIN,params).get(new ApiListener() {
+        new GetApi(Constant.URL_STUDENT_LOGIN, params).get(new ApiListener() {
             @Override
             public void success(ApiUtil apiUtil) {
-                try {
-                    boolean isUpdate = UpdateSerialNumber(id,sn);
-                    if (isUpdate){
-                        GetApi api = (GetApi) apiUtil;
-                        JSONObject json = api.mJson;
-
-                        Log.i(TAG, "onCompletedListener: "
-                                + "studentId:"+json.get("studentId")
-                                + ", studentName:" + json.get("studentName")
-                                + ", studentPassword:" +json.get("studentPassword")
-                                + ", classId:" + json.get("classId")
-                                + ", gender:" + json.get("gender")
-                                + ", serialNumber:" + json.get("serialNumber"));
-
-                        editor = pref.edit();
-                        editor.putString("account",(String) json.get("studentId"));
-                        editor.putString("identity",identity);
-                        editor.putString("name",(String) json.get("studentName"));
-                        editor.putString("password",(String) json.get("studentPassword"));
-                        editor.putString("serialNumber",(String) json.get("serialNumber"));
-                        editor.apply();
-
-                        mainHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                ToastUtil.showToast(LoginActivity.this,"登陆成功，欢迎" + pref.getString("name",null));
-                            }
-                        });
-                        finish();
-                    }else {
-                        mainHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                ToastUtil.showToast(LoginActivity.this,"请不要替签！");
-                            }
-                        });
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                updateSerialNumber(id, sn);
             }
 
             @Override
@@ -227,7 +189,7 @@ public class LoginActivity extends BaseActivity {
                 mainHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showToast(LoginActivity.this,"请检查用户名和密码是否正确！");
+                        ToastUtil.showToast(LoginActivity.this, "请检查用户名和密码是否正确！");
                     }
                 });
             }
@@ -240,22 +202,59 @@ public class LoginActivity extends BaseActivity {
     /**
      * 更新学生硬件设备的信息
      */
-    public boolean UpdateSerialNumber(String studentId, String serialNumber){
-        params.put("studentId",studentId);
-        params.put("serialNumber",serialNumber);
-        boolean[] result = {false};
-        new PutApi(Constant.URL_STUDENT_UPDATESN,params).put(new ApiListener() {
+    public void updateSerialNumber(String studentId, String serialNumber) {
+
+        params.put("studentId", studentId);
+        params.put("serialNumber", serialNumber);
+
+        new PutApi(Constant.URL_STUDENT_UPDATESN, params).put(new ApiListener() {
             @Override
             public void success(ApiUtil apiUtil) {
-                result[0] = true;
+                try {
+                    PutApi api = (PutApi) apiUtil;
+                    JSONObject json = api.mJson;
+
+                    Log.i(TAG, "onCompletedListener: "
+                            + "studentId:" + json.get("studentId")
+                            + ", studentName:" + json.get("studentName")
+                            + ", studentPassword:" + json.get("studentPassword")
+                            + ", classId:" + json.get("classId")
+                            + ", gender:" + json.get("gender")
+                            + ", serialNumber:" + json.get("serialNumber"));
+
+                    editor = pref.edit();
+                    editor.putString("account", (String) json.get("studentId"));
+                    editor.putString("identity", identity);
+                    editor.putString("name", (String) json.get("studentName"));
+                    editor.putString("password", (String) json.get("studentPassword"));
+                    editor.putString("serialNumber", (String) json.get("serialNumber"));
+                    editor.apply();
+
+                    mainHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtil.showToast(LoginActivity.this, "登陆成功，欢迎" + pref.getString("name", null));
+                        }
+                    });
+                    finish();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void failure(ApiUtil apiUtil) {
-                result[0] = false;
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.showToast(LoginActivity.this, "请不要替签！");
+                    }
+                });
+                Log.i(TAG, "failure: 检查信息失败，有替签风险.");
             }
         });
-        return result[0];
+        params = null;
+        params = new HashMap<>();
     }
 
     @Override
@@ -267,7 +266,7 @@ public class LoginActivity extends BaseActivity {
      * 跳转至注册页面
      */
     @OnClick(R.id.link_register)
-    public void onSelectIdentityToRegisterClicker(){
+    public void onSelectIdentityToRegisterClicker() {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -281,16 +280,16 @@ public class LoginActivity extends BaseActivity {
      *
      * @param view
      */
-    private void showIdentityAlertDialog(View view){
+    private void showIdentityAlertDialog(View view) {
 
-        final String[] items = {"我是老师","我是学生"};
+        final String[] items = {"我是老师", "我是学生"};
         final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setTitle("请选择你的身份");
         alertBuilder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 Intent intent = null;
-                switch (i){
+                switch (i) {
                     case 0:
                         intent = new Intent(LoginActivity.this, TeacherRegisterActivity.class);
                         startActivity(intent);
@@ -307,8 +306,4 @@ public class LoginActivity extends BaseActivity {
         identity_register = alertBuilder.create();
         alertBuilder.show();
     }
-
-
-
-
 }

@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="创建微课"
+            android:text="创建课堂"
             android:textColor="@color/colorWhite"
             android:textStyle="bold" />
 
@@ -61,7 +61,7 @@
             <EditText
                 android:textColor="#a7a7a6"
                 android:paddingLeft="15dp"
-                android:id="@+id/class_name_edit"
+                android:id="@+id/class_id_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null" />
@@ -90,7 +90,7 @@
             <EditText
                 android:textColor="#a7a7a6"
                 android:paddingLeft="15dp"
-                android:id="@+id/class_major_edit"
+                android:id="@+id/course_name_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null" />
@@ -118,7 +118,7 @@
             <EditText
                 android:textColor="#a7a7a6"
                 android:paddingLeft="15dp"
-                android:id="@+id/class_longtime_edit"
+                android:id="@+id/course_time_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null" />
@@ -128,7 +128,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/create_class_btn"
+        android:id="@+id/create_course_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
