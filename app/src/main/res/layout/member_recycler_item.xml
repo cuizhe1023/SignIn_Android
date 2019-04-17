@@ -45,16 +45,16 @@
                 android:gravity="end|center_vertical"
                 android:layout_marginEnd="15dp"
                 android:layout_alignParentEnd="true"
-                android:layout_toRightOf="@+id/class_class_item"
+                android:layout_toRightOf="@+id/student_name_item"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 tools:ignore="RtlCompat" />
 
             <TextView
-                android:id="@+id/class_class_item"
+                android:id="@+id/student_name_item"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_alignStart="@+id/class_name_item"
+                android:layout_alignStart="@+id/student_id_item"
                 android:layout_alignTop="@+id/class_avator_item"
                 android:gravity="center_vertical"
                 android:text="加载中......"
@@ -63,10 +63,10 @@
                 tools:ignore="RtlCompat" />
 
             <TextView
-                android:id="@+id/class_name_item"
+                android:id="@+id/student_id_item"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_below="@+id/class_class_item"
+                android:layout_below="@+id/student_name_item"
                 android:layout_marginStart="10dp"
                 android:layout_toRightOf="@+id/class_avator_item"
                 android:gravity="center_vertical"

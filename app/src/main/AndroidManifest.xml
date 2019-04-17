@@ -34,6 +34,8 @@
         <activity android:name=".about.StudentRegisterActivity"/>
         <activity android:name=".classroom.course.member.MemberActivity"/>
         <activity android:name=".classroom.CreateCourseActivity"/>
+        <activity android:name=".classroom.course.CourseActivity"/>
+        <activity android:name=".classroom.course.signin.SignedActivity"/>
 
     </application>
 

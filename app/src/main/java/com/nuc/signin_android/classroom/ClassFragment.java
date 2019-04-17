@@ -12,6 +12,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseFragment;
+import com.nuc.signin_android.base.OnClickerListener;
+import com.nuc.signin_android.classroom.course.CourseActivity;
 import com.nuc.signin_android.entity.Course;
 import com.nuc.signin_android.net.GetApi;
 import com.nuc.signin_android.utils.Constant;
@@ -124,7 +126,18 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
                     public void run() {
                         linearLayoutManager = new LinearLayoutManager(getContext());
                         classFragmentRecycler.setLayoutManager(linearLayoutManager);
-                        classFragmentAdapter = new ClassFragmentAdapter(getContext(),list_create);
+                        classFragmentAdapter = new ClassFragmentAdapter(getContext(), list_create
+                                , new OnClickerListener() {
+                            @Override
+                            public void click(int position, View view) {
+
+                                Intent intent = new Intent(getContext(), CourseActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("courseId", list_create.get(position).getCourseId());
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
                         classFragmentRecycler.setAdapter(classFragmentAdapter);
                     }
                 });

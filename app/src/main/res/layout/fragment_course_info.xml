@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#f4f8fa"
-    tools:context="com.example.administrator.wclass.classFuture.inner.show.ShowFragment">
+    tools:context="com.nuc.signin_android.classroom.course.info.CourseInfoFragment">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/show_appbar"
         android:layout_width="match_parent"
@@ -18,7 +18,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_centerVertical="true"
                 android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_height="30dp"
+                tools:ignore="VectorDrawableCompat" />
             <TextView
                 android:id="@+id/show_title_text"
                 android:gravity="center"
@@ -131,8 +132,15 @@
         android:background="#ababab"
         android:layout_width="match_parent"
         android:layout_height="1dp" />
+
+    <TextView
+        android:background="#ababab"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
     <RelativeLayout
         android:background="#ffff"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="60dp">
         <TextView
@@ -144,23 +152,66 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/textView2" />
-        <CheckBox
-            android:visibility="gone"
+        <TextView
+            android:id="@+id/file_path"
+            android:textSize="16sp"
+            android:textColor="#272727"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="允许加入"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <Button
             android:checked="true"
-            android:id="@+id/checkbox"
+            android:id="@+id/select_file_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textView2"
             android:layout_alignBottom="@+id/textView2"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="12dp" />
+            android:layout_marginEnd="12dp"
+            tools:ignore="RtlCompat" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:background="#ffff"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <!--
+            textview:上传文件
+        -->
+
+        <!--
+            textview:文件路径
+        -->
+
+        <!--
+            button:选择文件 btn
+        -->
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/upload_btn"
+        android:textStyle="bold"
+        android:textColor="#ffff"
+        android:background="#dd5555"
+        android:text="上传学生名单"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <TextView
+        android:background="@color/write"
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
     <Button
         android:id="@+id/end_class_btn"
         android:textStyle="bold"
         android:textColor="#ffff"
         android:background="#dd5555"
-        android:text=""
+        android:text="结束课程"
         android:layout_width="match_parent"
         android:layout_height="40dp" />
 

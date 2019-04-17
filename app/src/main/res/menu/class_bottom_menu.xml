@@ -7,7 +7,7 @@
     <item android:id="@+id/bottom_do"
         android:title="活动"
         android:icon="@drawable/ic_colorize_black_24dp"/>
-    <item android:id="@+id/bottom_show"
+    <item android:id="@+id/bottom_info"
         android:title="详情"
         android:icon="@drawable/ic_apps_black_24dp"/>
 </menu>

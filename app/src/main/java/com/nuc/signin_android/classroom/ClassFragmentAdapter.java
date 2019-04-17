@@ -25,6 +25,7 @@ public class ClassFragmentAdapter extends RecyclerView.Adapter<ClassFragmentAdap
 
     private Context context;
     private List<Course> mCourseList;
+    private OnClickerListener onClickerListener;
     private static final String TAG = "ClassFragmentAdapter";
 
 
@@ -45,9 +46,10 @@ public class ClassFragmentAdapter extends RecyclerView.Adapter<ClassFragmentAdap
         }
     }
 
-    public ClassFragmentAdapter(Context context, List<Course> mCourseList) {
+    public ClassFragmentAdapter(Context context, List<Course> mCourseList, OnClickerListener onClickerListener) {
         this.context = context;
         this.mCourseList = mCourseList;
+        this.onClickerListener = onClickerListener;
     }
 
     @NonNull
@@ -65,6 +67,15 @@ public class ClassFragmentAdapter extends RecyclerView.Adapter<ClassFragmentAdap
         viewHolder.courseId.setText(course.getCourseId());
         viewHolder.courseName.setText(course.getCourseName());
         viewHolder.teacherName.setText(course.getTeacherName());
+
+        if (onClickerListener != null){
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClickerListener.click(viewHolder.getLayoutPosition(),viewHolder.itemView);
+                }
+            });
+        }
     }
 
     @Override
