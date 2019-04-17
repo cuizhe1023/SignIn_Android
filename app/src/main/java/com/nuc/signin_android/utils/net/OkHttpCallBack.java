@@ -22,7 +22,7 @@ public abstract class OkHttpCallBack implements Callback {
 
     private static final String TAG = "OkHttpCallBack";
 
-    public abstract void onSuccess(final Call call, JSONObject jsonObject, int code);
+    public abstract void onSuccess(final Call call, Object jsonObject, int code);
 
     @Override
     public void onResponse(Call call, Response response) {
@@ -32,7 +32,7 @@ public abstract class OkHttpCallBack implements Callback {
                     String str = response.body().string().trim();
                     Log.i(TAG, "onResponse: str = " + str);
                     if (!TextUtils.isEmpty(str)){
-                        JSONObject object = (JSONObject) new JSONTokener(str).nextValue();
+                        Object object = new JSONTokener(str).nextValue();
                         if (object != null){
                             onSuccess(call,object,response.code());
                         }else {

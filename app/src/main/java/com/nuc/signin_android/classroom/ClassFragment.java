@@ -2,19 +2,32 @@ package com.nuc.signin_android.classroom;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseFragment;
+import com.nuc.signin_android.entity.Course;
+import com.nuc.signin_android.net.GetApi;
+import com.nuc.signin_android.utils.Constant;
+import com.nuc.signin_android.utils.net.ApiListener;
+import com.nuc.signin_android.utils.net.ApiUtil;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,12 +45,17 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
     RapidFloatingActionButton activityMainRfab;
     @BindView(R.id.activity_main_rfal)
     RapidFloatingActionLayout activityMainRfal;
+    private View view; //定义 view 用来设置 fragment 的 layout
 
     private RapidFloatingActionHelper rfabHelper;
-    private List list_create = new ArrayList<>();
-    private List list_join = new ArrayList<>();
-    private List<String>list_all = new ArrayList<>();
+    private List<Course> list_create = new ArrayList<>();
+    private List<Course> list_join = new ArrayList<>();
+    private List<Course>list_all = new ArrayList<>();
     private static final String TAG = "ClassFragment";
+    private HashMap<String,String> params = new HashMap<>();
+
+    private ClassFragmentAdapter classFragmentAdapter;
+    private LinearLayoutManager linearLayoutManager;
 
     public static ClassFragment getInstance() {
         // Required empty public constructor
@@ -70,6 +88,69 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
     }
 
+    /**
+     * 从服务器获取数据更新
+     */
+    private void updateDate() {
+        if (list_all.size() != 0){
+            list_all.clear();
+        }
+
+        // 如果是老师，显示创建的班级信息.
+        if (userId != null && "teacher".equals(identity)){
+            getCreateList(userId);
+        }
+    }
+
+    private void getCreateList(String teacherId){
+
+        params.put("teacherId",teacherId);
+
+        new GetApi(Constant.URL_COURSE_CREATELIST,params).get(new ApiListener() {
+            @Override
+            public void success(ApiUtil apiUtil) {
+                GetApi api = (GetApi) apiUtil;
+                String json = api.mJsonArray.toString();
+                parseJSONWithGson(json);
+                for (Course course :
+                        list_create) {
+                    Log.i(TAG, "success: courseId = " + course.getCourseId());
+                    Log.i(TAG, "success: classId = "  + course.getClassId());
+                    Log.i(TAG, "success: courseName = " + course.getCourseName());
+                    Log.i(TAG, "success: courseTeacherId = " + course.getTeacherId());
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        linearLayoutManager = new LinearLayoutManager(getContext());
+                        classFragmentRecycler.setLayoutManager(linearLayoutManager);
+                        classFragmentAdapter = new ClassFragmentAdapter(getContext(),list_create);
+                        classFragmentRecycler.setAdapter(classFragmentAdapter);
+                    }
+                });
+
+            }
+
+            @Override
+            public void failure(ApiUtil apiUtil) {
+                Log.i(TAG, "failure: 老师创建的课堂列表加载失败");
+            }
+        });
+    }
+
+    private void parseJSONWithGson(String jsonData){
+        Gson gson = new Gson();
+        List<Course> courseList = gson.fromJson(jsonData,new TypeToken<List<Course>>(){}.getType());
+        list_create = courseList;
+        for (Course course :
+                courseList) {
+            Log.e(TAG, "parseJSONWithGson: courseId = " + course.getCourseId());
+            Log.e(TAG, "parseJSONWithGson: classId = "  + course.getClassId());
+            Log.e(TAG, "parseJSONWithGson: courseName = " + course.getCourseName());
+            Log.e(TAG, "parseJSONWithGson: courseTeacherId = " + course.getTeacherId());
+        }
+    }
+
     @Override
     protected void init(View view, Bundle savedInstanceState) {
 
@@ -98,4 +179,9 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateDate();
+    }
 }

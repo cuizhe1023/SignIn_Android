@@ -25,7 +25,7 @@ public abstract class ApiUtil {
 
     private OkHttpCallBack mSendListener = new OkHttpCallBack() {
         @Override
-        public void onSuccess(Call call, JSONObject response, int code) {
+        public void onSuccess(Call call, Object response, int code) {
             mStatus = code;
             try {
                 Log.i("ApiUtil", "onSuccess: " + mStatus);
@@ -50,7 +50,7 @@ public abstract class ApiUtil {
         return 0 == mStatus || 200 == mStatus;
     }
 
-    protected abstract void parseData(JSONObject jsonObject) throws Exception;// 解析数据的方法
+    protected abstract void parseData(Object jsonObject) throws Exception;// 解析数据的方法
 
     protected abstract String getUrl(); // 获取 URL
 

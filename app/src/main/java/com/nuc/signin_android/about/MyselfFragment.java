@@ -116,10 +116,4 @@ public class MyselfFragment extends BaseFragment {
         Log.i(TAG, "onLogoutBtnClicked: 退出登录");
         setNull();
     }
-
-
-
-
-
-
 }

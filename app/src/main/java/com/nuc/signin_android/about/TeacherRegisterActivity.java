@@ -11,8 +11,6 @@ import com.nuc.signin_android.MainActivity;
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseActivity;
 import com.nuc.signin_android.net.PostApi;
-import com.nuc.signin_android.net.tools.MyAsyncTask;
-import com.nuc.signin_android.net.tools.TaskListener;
 import com.nuc.signin_android.utils.Constant;
 import com.nuc.signin_android.utils.ToastUtil;
 import com.nuc.signin_android.utils.net.ApiListener;

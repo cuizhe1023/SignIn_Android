@@ -2,6 +2,7 @@ package com.nuc.signin_android.net;
 
 import com.nuc.signin_android.utils.net.ApiUtil;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 public class GetApi extends ApiUtil {
 
     public JSONObject mJson;
+    public JSONArray mJsonArray;
     private String mUrl;
 
     public GetApi(String mUrl, HashMap<String,String> paramsMap) {
@@ -27,7 +29,12 @@ public class GetApi extends ApiUtil {
     }
 
     @Override
-    protected void parseData(JSONObject jsonObject) throws Exception {
-        mJson = jsonObject;
+    protected void parseData(Object jsonObject) throws Exception {
+        if (jsonObject instanceof JSONObject){
+            mJson = (JSONObject) jsonObject;
+        }
+        if (jsonObject instanceof JSONArray){
+            mJsonArray = (JSONArray) jsonObject;
+        }
     }
 }

@@ -39,5 +39,9 @@ public class Constant {
     // http://10.0.116.44:8080/student/updateSN
     public static final String URL_STUDENT_UPDATESN = URL + STUDENT + "/updateSN";
 
+    // http://10.0.116.44:8080/course/insert
     public static final String URL_COURSE_INSERT = URL + COURSE + "/insert";
+
+    // http://10.0.116.44:8080/course/createList
+    public static final String URL_COURSE_CREATELIST = URL + COURSE + "/createList";
 }
