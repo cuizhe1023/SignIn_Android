@@ -13,10 +13,11 @@ public class Constant {
     public static final int CODE_SUCCESS = 1;//连接成功
     public static final int CODE_UNKNOWN_HOST = 2;//错误-未知的host
 
-    public static final String URL = "http://10.0.116.44:8080"; // IP地址请改为你自己的IP
+    public static final String URL = "http://192.168.43.152:8080"; // IP地址请改为你自己的IP
     public static final String TEACHER = "/teacher";
     public static final String STUDENT = "/student";
     public static final String COURSE = "/course";
+    public static final String SELECT_COURSE = "/select_course";
 
     // http://10.0.116.44:8080/teacher/register
     public static final String URL_TEACHER_REGISTER = URL + TEACHER +"/register";
@@ -44,4 +45,10 @@ public class Constant {
 
     // http://10.0.116.44:8080/course/createList
     public static final String URL_COURSE_CREATELIST = URL + COURSE + "/createList";
+
+    // http://10.0.116.44:8080/course/upload
+    public static final String URL_COURSE_UPLOADFILE = URL + COURSE + "/upload";
+
+    public static final String URL_SELECT_COURSE_INSERT = URL + SELECT_COURSE + "/insert";
+
 }

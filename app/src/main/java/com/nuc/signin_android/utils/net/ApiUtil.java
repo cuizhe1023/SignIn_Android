@@ -89,4 +89,9 @@ public abstract class ApiUtil {
         mApiListener = listener;
         OkHttpUtil.sendRequest(getUrl(),mSendListener,params,OkHttpUtil.REQUEST_TYPE.DELECT);
     }
+
+    public void uploadFile(ApiListener listener){
+        mApiListener = listener;
+        OkHttpUtil.uploadFile(getUrl(),mSendListener,params);
+    }
 }

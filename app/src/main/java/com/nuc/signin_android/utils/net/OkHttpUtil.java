@@ -2,12 +2,17 @@ package com.nuc.signin_android.utils.net;
 
 import android.util.Log;
 
+import com.nuc.signin_android.utils.Constant;
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -20,6 +25,8 @@ import okhttp3.RequestBody;
 public class OkHttpUtil {
 
     private static OkHttpClient mOkHttpClient = null;
+
+    private static final String TAG = "OkHttpUtil";
 
     public enum REQUEST_TYPE{
         POST,PUT,DELECT
@@ -96,6 +103,36 @@ public class OkHttpUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 封装上传文件的请求
+     *
+     * @param url URL
+     * @param okHttpCallBack 回调
+     */
+    public static void uploadFile(String url, OkHttpCallBack okHttpCallBack, HashMap<String,String> bodyMap){
+        Call call = null;
+        String filePath = bodyMap.get("filePath");
+        String courseId = bodyMap.get("courseId");
+        Log.e(TAG, "uploadFile: filePath = " + filePath );
+        Log.e(TAG, "uploadFile: courseId = " + courseId );
+        File file = new File(filePath);
+        Log.i(TAG, "uploadFile: file.getName = " + file.getName());
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("courseId",courseId)
+                .addFormDataPart("file",file.getName(),
+                        RequestBody.create(MediaType.parse("application/vnd.ms-excel"),file));
+
+        RequestBody requestBody = builder.build();
+        Request request = new Request.Builder()
+                .url(Constant.URL_COURSE_UPLOADFILE)
+                .post(requestBody)
+                .build();
+
+        call = mOkHttpClient.newCall(request);
+        call.enqueue(okHttpCallBack);// 异步调用
     }
 
 }
