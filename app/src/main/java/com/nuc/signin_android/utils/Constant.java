@@ -49,6 +49,13 @@ public class Constant {
     // http://10.0.116.44:8080/course/upload
     public static final String URL_COURSE_UPLOADFILE = URL + COURSE + "/upload";
 
+    public static final String URL_COURSE_STUDENTCOURSE = URL + COURSE + "/studentCourse";
+
     public static final String URL_SELECT_COURSE_INSERT = URL + SELECT_COURSE + "/insert";
+
+    public static final String URL_SELECT_COURSE_STUDENTLIST = URL + SELECT_COURSE + "/studentList";
+
+    public static final String URL_SELECT_COURSE_SUM_STUDENT = URL + SELECT_COURSE + "/studentSum";
+
 
 }

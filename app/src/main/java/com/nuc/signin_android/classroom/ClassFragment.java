@@ -2,7 +2,6 @@ package com.nuc.signin_android.classroom;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,9 +23,6 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,10 +94,63 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
             list_all.clear();
         }
 
-        // 如果是老师，显示创建的班级信息.
+        // 如果是老师，显示创建的课程信息.
         if (userId != null && "teacher".equals(identity)){
             getCreateList(userId);
         }
+
+        // 如果是学生，显示选修了的课程信息。
+        if (userId != null && "student".equals(identity)){
+            getStudentCourseList(userId);
+        }
+    }
+
+    private void getStudentCourseList(String studentId) {
+        params.put("studentId",studentId);
+
+        new GetApi(Constant.URL_COURSE_STUDENTCOURSE,params).get(new ApiListener() {
+            @Override
+            public void success(ApiUtil apiUtil) {
+                GetApi api = (GetApi) apiUtil;
+                String json = api.mJsonArray.toString();
+                parseJSONWithGson(json);
+                for (Course course :
+                        list_create) {
+                    Log.i(TAG, "success: courseId = " + course.getCourseId());
+                    Log.i(TAG, "success: classId = "  + course.getClassId());
+                    Log.i(TAG, "success: courseName = " + course.getCourseName());
+                    Log.i(TAG, "success: courseTeacherId = " + course.getTeacherId());
+                }
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        linearLayoutManager = new LinearLayoutManager(getContext());
+                        classFragmentRecycler.setLayoutManager(linearLayoutManager);
+                        classFragmentAdapter = new ClassFragmentAdapter(getContext(), list_create
+                                , new OnClickerListener() {
+                            @Override
+                            public void click(int position, View view) {
+
+                                Intent intent = new Intent(getContext(), CourseActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("courseId", list_create.get(position).getCourseId());
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
+                        classFragmentRecycler.setAdapter(classFragmentAdapter);
+                    }
+                });
+
+            }
+
+            @Override
+            public void failure(ApiUtil apiUtil) {
+
+            }
+        });
+
     }
 
     private void getCreateList(String teacherId){

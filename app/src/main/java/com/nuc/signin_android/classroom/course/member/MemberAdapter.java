@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.OnClickerListener;
+import com.nuc.signin_android.entity.SelectCourse;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
 
     private Context context;
-    private List<Map.Entry<String, Integer>> map = new ArrayList<>();
+    private List<SelectCourse> mSelectCourseList = new ArrayList<>();
     private OnClickerListener onClickerListener;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -36,8 +36,8 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
         TextView memberItemRank;
         @BindView(R.id.class_avator_item)
         ImageView memberItemAvator;
-        @BindView(R.id.class_random_number_item)
-        TextView memberItemAllScore;
+        @BindView(R.id.student_gender_item)
+        TextView memberItemStudentGender;
         @BindView(R.id.student_name_item)
         TextView memberItemStudentName;
         @BindView(R.id.student_id_item)
@@ -49,9 +49,9 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
         }
     }
 
-    public MemberAdapter(Context context, List<Map.Entry<String, Integer>> map, OnClickerListener onClickerListener) {
+    public MemberAdapter(Context context, List<SelectCourse> mSelectCourseList, OnClickerListener onClickerListener) {
         this.context = context;
-        this.map = map;
+        this.mSelectCourseList = mSelectCourseList;
         this.onClickerListener = onClickerListener;
     }
 
@@ -63,7 +63,13 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MemberAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+
+        SelectCourse selectCourse = mSelectCourseList.get(i);
+        viewHolder.memberItemStudentId.setText(selectCourse.getStudentId());
+        viewHolder.memberItemStudentName.setText(selectCourse.getStudentName());
+        viewHolder.memberItemStudentGender.setText(selectCourse.getGender());
+
         if (onClickerListener != null){
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,11 +78,10 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
                 }
             });
         }
-
     }
 
     @Override
     public int getItemCount() {
-        return map.size();
+        return mSelectCourseList.size();
     }
 }

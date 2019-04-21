@@ -35,6 +35,7 @@ public class CourseActivity extends BaseActivity {
     protected void logicActivity(Bundle savedInstanceState) {
         Intent intent = getIntent();
         courseId = intent.getExtras().getString("courseId");
+        Log.i(TAG, "logicActivity: courseId = " + courseId);
 
         if (savedInstanceState != null){
             Log.i(TAG, "logicActivity: " + savedInstanceState.getInt("bottom_id_class"));
