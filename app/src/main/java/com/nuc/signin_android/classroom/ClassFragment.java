@@ -45,8 +45,6 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
     RapidFloatingActionLayout activityMainRfal;
 
     private RapidFloatingActionHelper rfabHelper;
-    private List<Course> list_create = new ArrayList<>();
-    private List<Course> list_join = new ArrayList<>();
     private List<Course>list_all = new ArrayList<>();
     private static final String TAG = "ClassFragment";
     private HashMap<String,String> params = new HashMap<>();
@@ -85,6 +83,16 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
     }
 
+    @Override
+    protected void init(View view, Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected int getResourcesLayout() {
+        return R.layout.fragment_class;
+    }
+
     /**
      * 从服务器获取数据更新
      */
@@ -114,7 +122,7 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
                 String json = api.mJsonArray.toString();
                 parseJSONWithGson(json);
                 for (Course course :
-                        list_create) {
+                        list_all) {
                     Log.i(TAG, "success: courseId = " + course.getCourseId());
                     Log.i(TAG, "success: classId = "  + course.getClassId());
                     Log.i(TAG, "success: courseName = " + course.getCourseName());
@@ -126,15 +134,15 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
                     public void run() {
                         linearLayoutManager = new LinearLayoutManager(getContext());
                         classFragmentRecycler.setLayoutManager(linearLayoutManager);
-                        classFragmentAdapter = new ClassFragmentAdapter(getContext(), list_create
+                        classFragmentAdapter = new ClassFragmentAdapter(getContext(), list_all
                                 , new OnClickerListener() {
                             @Override
                             public void click(int position, View view) {
-                                Log.e(TAG, "click: list_create.get("+position+") = " + list_create.get(position));
+                                Log.e(TAG, "click: list_create.get("+position+") = " + list_all.get(position));
 
                                 Intent intent = new Intent(getContext(), CourseActivity.class);
                                 Bundle bundle = new Bundle();
-                                bundle.putSerializable("course", list_create.get(position));
+                                bundle.putSerializable("course", list_all.get(position));
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                             }
@@ -164,7 +172,7 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
                 String json = api.mJsonArray.toString();
                 parseJSONWithGson(json);
                 for (Course course :
-                        list_create) {
+                        list_all) {
                     Log.i(TAG, "success: courseId = " + course.getCourseId());
                     Log.i(TAG, "success: classId = "  + course.getClassId());
                     Log.i(TAG, "success: courseName = " + course.getCourseName());
@@ -175,14 +183,14 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
                     public void run() {
                         linearLayoutManager = new LinearLayoutManager(getContext());
                         classFragmentRecycler.setLayoutManager(linearLayoutManager);
-                        classFragmentAdapter = new ClassFragmentAdapter(getContext(), list_create
+                        classFragmentAdapter = new ClassFragmentAdapter(getContext(), list_all
                                 , new OnClickerListener() {
                             @Override
                             public void click(int position, View view) {
 
                                 Intent intent = new Intent(getContext(), CourseActivity.class);
                                 Bundle bundle = new Bundle();
-                                bundle.putSerializable("course", list_create.get(position));
+                                bundle.putSerializable("course", list_all.get(position));
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                             }
@@ -203,7 +211,7 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
     private void parseJSONWithGson(String jsonData){
         Gson gson = new Gson();
         List<Course> courseList = gson.fromJson(jsonData,new TypeToken<List<Course>>(){}.getType());
-        list_create = courseList;
+        list_all = courseList;
         for (Course course :
                 courseList) {
             Log.e(TAG, "parseJSONWithGson: courseId = " + course.getCourseId());
@@ -211,16 +219,6 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
             Log.e(TAG, "parseJSONWithGson: courseName = " + course.getCourseName());
             Log.e(TAG, "parseJSONWithGson: courseTeacherId = " + course.getTeacherId());
         }
-    }
-
-    @Override
-    protected void init(View view, Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    protected int getResourcesLayout() {
-        return R.layout.fragment_class;
     }
 
     @Override

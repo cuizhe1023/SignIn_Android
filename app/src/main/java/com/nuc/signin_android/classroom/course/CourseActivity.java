@@ -12,6 +12,7 @@ import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseActivity;
 import com.nuc.signin_android.classroom.course.member.MemberFragment;
 import com.nuc.signin_android.classroom.course.info.CourseInfoFragment;
+import com.nuc.signin_android.classroom.course.signin.SignInFragment;
 import com.nuc.signin_android.entity.Course;
 import com.nuc.signin_android.utils.ActivityUtils;
 
@@ -68,8 +69,8 @@ public class CourseActivity extends BaseActivity {
             case R.id.bottom_person:
                 ActivityUtils.replaceFragmentToActivity(fragmentManager,MemberFragment.getInstance(course),R.id.course_frame);
                 break;
-            case R.id.bottom_do:
-                //ActivityUtils.replaceFragmentToActivity(fragmentManager, DoFragment.getInstance(courseId),R.id.course_frame);
+            case R.id.bottom_sign_in:
+                ActivityUtils.replaceFragmentToActivity(fragmentManager, SignInFragment.getInstance(course),R.id.course_frame);
                 break;
             case R.id.bottom_info:
                 ActivityUtils.replaceFragmentToActivity(fragmentManager, CourseInfoFragment.getInstance(course),R.id.course_frame);

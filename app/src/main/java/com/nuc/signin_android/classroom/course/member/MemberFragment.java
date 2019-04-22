@@ -1,7 +1,6 @@
 package com.nuc.signin_android.classroom.course.member;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,7 +25,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 
@@ -51,8 +49,6 @@ public class MemberFragment extends BaseFragment {
     RecyclerView memberRecycler;
     @BindView(R.id.sum_member_text)
     TextView sumMemberText;
-    @BindView(R.id.qiandao_btn)
-    FloatingActionButton qiandaoBtn;
 
     private List<SelectCourse> list_all = new ArrayList<>();
     private HashMap<String,String> params = new HashMap<>();

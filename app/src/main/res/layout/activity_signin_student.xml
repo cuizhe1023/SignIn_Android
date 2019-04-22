@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.nuc.signin_android.classroom.course.member.MemberActivity">
+    tools:context="com.nuc.signin_android.classroom.course.signin.StudentSignInActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_signed"
@@ -32,11 +31,6 @@
         </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
-    <EditText
-        android:id="@+id/member_sigin_edit"
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
     <Button
         android:layout_margin="10dp"
         android:id="@+id/member_sigin_btn"

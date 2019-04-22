@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.administrator.wclass.classFuture.inner.doSome.SignedActivity">
+    tools:context="com.nuc.signin_android.classroom.course.signin.TeacherSignInActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_signed"
@@ -18,7 +17,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_centerVertical="true"
                 android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_height="30dp"
+                tools:ignore="VectorDrawableCompat" />
             <TextView
                 android:textStyle="bold"
                 android:textColor="@color/colorWhite"
@@ -29,27 +29,13 @@
         </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
-    <EditText
-        android:textColor="#bcbaba"
-        android:textSize="14sp"
-        android:id="@+id/key_edit"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
-        android:paddingLeft="10dp"
-        android:layout_below="@+id/appbar_signed"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="请输入签到口令"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="81dp" />
     <LinearLayout
         android:id="@+id/layout_se"
         android:weightSum="2"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/key_edit"
+        android:layout_below="@+id/appbar_signed"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -58,7 +44,7 @@
             android:background="@color/colorAccent"
             android:text="开始签到"
             android:layout_weight="1"
-            android:layout_below="@id/key_edit"
+            android:layout_below="@id/appbar_signed"
             android:id="@+id/start_signed_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

@@ -11,14 +11,6 @@ import android.widget.TextView;
 
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseFragment;
-import com.nuc.signin_android.entity.Student;
-import com.nuc.signin_android.entity.Teacher;
-import com.nuc.signin_android.net.tools.MyAsyncTask;
-import com.nuc.signin_android.net.tools.TaskListener;
-import com.nuc.signin_android.utils.Constant;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;

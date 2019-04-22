@@ -2,14 +2,15 @@ package com.nuc.signin_android.classroom.course.signin;
 
 import android.os.Bundle;
 
+import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseActivity;
 
 /**
  * @Author: cuizhe
- * @Date: 2019/4/11 17:21
+ * @Date: 2019/4/22 19:20
  * @Description:
  */
-public class SignedActivity extends BaseActivity {
+public class TeacherSignInActivity  extends BaseActivity {
 
     @Override
     protected void logicActivity(Bundle savedInstanceState) {
@@ -18,6 +19,6 @@ public class SignedActivity extends BaseActivity {
 
     @Override
     protected int getLayoutView() {
-        return 0;
+        return R.layout.activity_signin_teacher;
     }
 }
