@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseFragment;
+import com.nuc.signin_android.entity.Course;
 import com.nuc.signin_android.entity.SelectCourse;
 import com.nuc.signin_android.net.PostApi;
 import com.nuc.signin_android.net.UploadFileApi;
@@ -50,41 +52,59 @@ public class CourseInfoFragment extends BaseFragment {
     @BindView(R.id.show_class_number_text)
     TextView showClassNumberText;
     @BindView(R.id.show_name_text)
-    TextView showNameText;
-    @BindView(R.id.show_description_text)
-    TextView showDescriptionText;
-    @BindView(R.id.show_bankehao_text)
-    TextView showBankehaoText;
-    @BindView(R.id.show_longtime_text)
+    TextView showCourseNameText;
+    @BindView(R.id.show_teacher_name_text)
+    TextView showTeacherNameText;
+    @BindView(R.id.show_course_id_text)
+    TextView showCourseIdText;
+    @BindView(R.id.show_course_time_text)
     TextView showLongtimeText;
     @BindView(R.id.end_class_btn)
-    Button endClassBtn;
+    Button endCourseBtn;
     @BindView(R.id.select_file_btn)
     Button selectFileBtn;
+    @BindView(R.id.upload_btn)
+    Button uploadFileBtn;
     @BindView(R.id.file_path)
     TextView filePathText;
+    @BindView(R.id.course_info_rl)
+    RelativeLayout layout;
+    @BindView(R.id.course_info_cut_line1)
+    TextView cutLine1;
+    @BindView(R.id.course_info_cut_line2)
+    TextView cutLine2;
 
     String path;
     private HashMap<String,String> params = new HashMap<>();
 
-    private static String courseId;
+    private static Course mCourse;
     private List<SelectCourse> selectCourseList;
-    private String jsonTest;
 
-    public static CourseInfoFragment getInstance(String course_id) {
+    public static CourseInfoFragment getInstance(Course course) {
         // Required empty public constructor
-        courseId = course_id;
+        mCourse = course;
         return new CourseInfoFragment();
     }
 
     @Override
     protected void logic() {
-
+        showTitleText.setText(mCourse.getCourseName());
+        showCourseIdText.setText(mCourse.getCourseId());
+        showLongtimeText.setText(mCourse.getCourseTime());
+        showClassNumberText.setText(mCourse.getClassId());
+        showCourseNameText.setText(mCourse.getCourseName());
+        showTeacherNameText.setText(mCourse.getTeacherName());
+        if ("student".equals(identity)){
+            layout.setVisibility(View.INVISIBLE);
+            uploadFileBtn.setVisibility(View.INVISIBLE);
+            endCourseBtn.setVisibility(View.INVISIBLE);
+            cutLine1.setVisibility(View.INVISIBLE);
+            cutLine2.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-
     }
 
     @Override
@@ -104,7 +124,7 @@ public class CourseInfoFragment extends BaseFragment {
     @OnClick(R.id.upload_btn)
     public void onUploadExcelFileBtnClicked(){
         params.put("filePath",path);
-        params.put("courseId",courseId);
+        params.put("courseId",mCourse.getCourseId());
         new UploadFileApi(Constant.URL_COURSE_UPLOADFILE,params).uploadFile(new ApiListener() {
             @Override
             public void success(ApiUtil apiUtil) {
@@ -160,7 +180,6 @@ public class CourseInfoFragment extends BaseFragment {
         });
         params = null;
         params = new HashMap<>();
-        Log.i(TAG, "onUploadExcelFileBtnClicked: jsonTest = " + jsonTest);
     }
 
 

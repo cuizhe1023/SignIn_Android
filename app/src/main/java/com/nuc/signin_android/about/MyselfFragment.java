@@ -79,6 +79,7 @@ public class MyselfFragment extends BaseFragment {
     private void setNull() {
         meName.setText("请先登录");
         meMajor.setText("");
+        meLogin.setVisibility(View.VISIBLE);
         editor = pref.edit();
         editor.clear();
         editor.apply();
@@ -86,6 +87,9 @@ public class MyselfFragment extends BaseFragment {
 
     @Override
     protected void logic() {
+        if (userId != null && identity != null){
+            meLogin.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

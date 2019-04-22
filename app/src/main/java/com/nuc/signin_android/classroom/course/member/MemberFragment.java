@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseFragment;
+import com.nuc.signin_android.entity.Course;
 import com.nuc.signin_android.entity.SelectCourse;
 import com.nuc.signin_android.net.GetApi;
 import com.nuc.signin_android.utils.Constant;
@@ -40,10 +41,10 @@ public class MemberFragment extends BaseFragment {
 
     @BindView(R.id.back_from_member_image)
     ImageView backFromMemberImage;
-    @BindView(R.id.appbar_title_text)
-    TextView appbarTitleText;
-    @BindView(R.id.rank)
-    TextView rank;
+    @BindView(R.id.member_title_text)
+    TextView memberTitleText;
+    @BindView(R.id.tv_member_student_list)
+    TextView memberStudentList;
     @BindView(R.id.score_text)
     TextView scoreText;
     @BindView(R.id.class_member_recycler)
@@ -53,25 +54,23 @@ public class MemberFragment extends BaseFragment {
     @BindView(R.id.qiandao_btn)
     FloatingActionButton qiandaoBtn;
 
-    private Map<String, Integer> map;
-    private List<Map.Entry<String, Integer>> entries;
-    private static String courseId ;
     private List<SelectCourse> list_all = new ArrayList<>();
-    private List<SelectCourse> list_create = new ArrayList<>();
     private HashMap<String,String> params = new HashMap<>();
 
     private MemberAdapter courseFragmentAdapter;
     private LinearLayoutManager linearLayoutManager;
 
-    public static MemberFragment getInstance(String course_id){
-        courseId = course_id;
-        Log.i(TAG, "getInstance: courseId = " + courseId);
+    private static Course mCourse;
+
+    public static MemberFragment getInstance(Course course){
+        mCourse = course;
         return new MemberFragment();
     }
 
     @Override
     protected void logic() {
-
+        memberTitleText.setText(mCourse.getCourseName());
+        memberStudentList.setText("学生信息");
     }
 
     @Override
@@ -89,9 +88,8 @@ public class MemberFragment extends BaseFragment {
             list_all.clear();
         }
 
-        // 如果是老师，显示选修了这门课的学生的信息.
-        getStudentList(courseId);
-        getStudentNumber(courseId);
+        getStudentList(mCourse.getCourseId());
+        getStudentNumber(mCourse.getCourseId());
     }
 
     private void getStudentNumber(String courseId) {

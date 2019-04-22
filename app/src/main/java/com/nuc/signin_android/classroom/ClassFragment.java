@@ -43,7 +43,6 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
     RapidFloatingActionButton activityMainRfab;
     @BindView(R.id.activity_main_rfal)
     RapidFloatingActionLayout activityMainRfal;
-    private View view; //定义 view 用来设置 fragment 的 layout
 
     private RapidFloatingActionHelper rfabHelper;
     private List<Course> list_create = new ArrayList<>();
@@ -131,10 +130,11 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
                                 , new OnClickerListener() {
                             @Override
                             public void click(int position, View view) {
+                                Log.e(TAG, "click: list_create.get("+position+") = " + list_create.get(position));
 
                                 Intent intent = new Intent(getContext(), CourseActivity.class);
                                 Bundle bundle = new Bundle();
-                                bundle.putString("courseId", list_create.get(position).getCourseId());
+                                bundle.putSerializable("course", list_create.get(position));
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                             }
@@ -182,7 +182,7 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
 
                                 Intent intent = new Intent(getContext(), CourseActivity.class);
                                 Bundle bundle = new Bundle();
-                                bundle.putString("courseId", list_create.get(position).getCourseId());
+                                bundle.putSerializable("course", list_create.get(position));
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                             }

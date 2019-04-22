@@ -20,7 +20,7 @@
                 android:layout_height="30dp"
                 tools:ignore="VectorDrawableCompat" />
             <TextView
-                android:id="@+id/appbar_title_text"
+                android:id="@+id/member_title_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -35,7 +35,7 @@
         android:layout_below="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:id="@+id/heihei1"
+        android:id="@+id/member_student_list"
         android:background="@color/colorPrimary"
         >
         <android.support.design.widget.FloatingActionButton
@@ -51,7 +51,7 @@
             tools:ignore="RtlCompat,VectorDrawableCompat" />
 
         <TextView
-            android:id="@+id/rank"
+            android:id="@+id/tv_member_student_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -90,7 +90,7 @@
         android:id="@+id/heihei"
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:layout_below="@+id/heihei1"
+        android:layout_below="@+id/member_student_list"
         >
         <TextView
             android:id="@+id/textView4"

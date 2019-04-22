@@ -12,6 +12,7 @@ import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseActivity;
 import com.nuc.signin_android.classroom.course.member.MemberFragment;
 import com.nuc.signin_android.classroom.course.info.CourseInfoFragment;
+import com.nuc.signin_android.entity.Course;
 import com.nuc.signin_android.utils.ActivityUtils;
 
 import butterknife.BindView;
@@ -29,19 +30,23 @@ public class CourseActivity extends BaseActivity {
 
     BottomNavigationView bottomMenu = null;
 
+    private Course course;
     private String courseId;
 
     @Override
     protected void logicActivity(Bundle savedInstanceState) {
         Intent intent = getIntent();
-        courseId = intent.getExtras().getString("courseId");
+//        courseId = intent.getExtras().getString("courseId");
+        Bundle bundle = intent.getExtras();
+        course = (Course) bundle.getSerializable("course");
+        courseId = course.getCourseId();
         Log.i(TAG, "logicActivity: courseId = " + courseId);
 
         if (savedInstanceState != null){
             Log.i(TAG, "logicActivity: " + savedInstanceState.getInt("bottom_id_class"));
             showFragment(savedInstanceState.getInt("bottom_id_class"));
         }else {
-            ActivityUtils.replaceFragmentToActivity(fragmentManager, MemberFragment.getInstance(courseId),R.id.course_frame);
+            ActivityUtils.replaceFragmentToActivity(fragmentManager, MemberFragment.getInstance(course),R.id.course_frame);
         }
 
         bottomMenu = findViewById(R.id.class_bottom_menu);
@@ -61,13 +66,13 @@ public class CourseActivity extends BaseActivity {
     private void showFragment(int menu_id) {
         switch (menu_id){
             case R.id.bottom_person:
-                ActivityUtils.replaceFragmentToActivity(fragmentManager,MemberFragment.getInstance(courseId),R.id.course_frame);
+                ActivityUtils.replaceFragmentToActivity(fragmentManager,MemberFragment.getInstance(course),R.id.course_frame);
                 break;
             case R.id.bottom_do:
                 //ActivityUtils.replaceFragmentToActivity(fragmentManager, DoFragment.getInstance(courseId),R.id.course_frame);
                 break;
             case R.id.bottom_info:
-                ActivityUtils.replaceFragmentToActivity(fragmentManager, CourseInfoFragment.getInstance(courseId),R.id.course_frame);
+                ActivityUtils.replaceFragmentToActivity(fragmentManager, CourseInfoFragment.getInstance(course),R.id.course_frame);
                 break;
         }
     }
