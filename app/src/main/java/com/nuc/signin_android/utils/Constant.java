@@ -6,18 +6,19 @@ package com.nuc.signin_android.utils;
  * @Description:
  */
 public class Constant {
-    public static final int TIMEOUT = 5 * 1000;//连接超时时间
-    public static final int port = 25256;//端口号
-    public static final String password = "123456885";//加密所使用的密钥
-    public static final int CODE_TIMEOUT = 0;//连接超时
-    public static final int CODE_SUCCESS = 1;//连接成功
-    public static final int CODE_UNKNOWN_HOST = 2;//错误-未知的host
+    public static final int TIMEOUT = 5 * 1000;// 连接超时时间
+    public static final int port = 25256;// 端口号
+    public static final String password = "123456885";// 加密所使用的密钥
+    public static final int CODE_TIMEOUT = 0;// 连接超时
+    public static final int CODE_SUCCESS = 1;// 连接成功
+    public static final int CODE_UNKNOWN_HOST = 2;// 错误-未知的host
 
     public static final String URL = "http://192.168.43.152:8080"; // IP地址请改为你自己的IP
     public static final String TEACHER = "/teacher";
     public static final String STUDENT = "/student";
     public static final String COURSE = "/course";
     public static final String SELECT_COURSE = "/select_course";
+    public static final String SIGN_IN = "/sign_in";
 
     // http://10.0.116.44:8080/teacher/register
     public static final String URL_TEACHER_REGISTER = URL + TEACHER +"/register";
@@ -56,6 +57,9 @@ public class Constant {
     public static final String URL_SELECT_COURSE_STUDENTLIST = URL + SELECT_COURSE + "/studentList";
 
     public static final String URL_SELECT_COURSE_SUM_STUDENT = URL + SELECT_COURSE + "/studentSum";
+
+    public static final String URL_SIGNIN_CREATE = URL + SIGN_IN + "/create";
+
 
 
 }

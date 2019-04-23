@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nuc.signin_android.entity.Course;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -59,11 +61,13 @@ public abstract class BaseFragment extends Fragment {
         unbinder.unbind();// 解除绑定
     }
 
-    protected void startActivityTo(Class activityClass, String s){
+    protected void startActivityTo(Class activityClass, String id, String name, Course course){
         Intent intent = new Intent(getContext(),activityClass);
         Bundle bundle = new Bundle();
         // 把数据打包为 bundle
-        bundle.putString("random_number",s);
+        bundle.putString("id",id);
+        bundle.putString("name",name);
+        bundle.putSerializable("course",course);
         // Intent 携带数据包
         intent.putExtras(bundle);
         startActivity(intent);

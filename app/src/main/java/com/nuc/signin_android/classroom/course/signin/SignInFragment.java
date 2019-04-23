@@ -44,7 +44,9 @@ public class SignInFragment extends BaseFragment implements RapidFloatingActionC
 
     private RapidFloatingActionHelper rfabHelper;
     private SignInFragmentAdapter adapter;
-    private static String random_number;
+
+    private String id;
+    private String name;
 
     private LinearLayoutManager linearLayoutManager;
 
@@ -55,6 +57,8 @@ public class SignInFragment extends BaseFragment implements RapidFloatingActionC
 
     @Override
     protected void logic() {
+        id = userId;
+        name = pref.getString("name",null);
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(getContext());
         List<RFACLabelItem> items = new ArrayList<>();
         items.add(new RFACLabelItem<Integer>()
@@ -102,10 +106,10 @@ public class SignInFragment extends BaseFragment implements RapidFloatingActionC
     private void startActivityByPosition(int position) {
         if (position == 0){
             if ("student".equals(identity)){
-                startActivityTo(StudentSignInActivity.class,random_number);
+                startActivityTo(StudentSignInActivity.class,id,name,mCourse);
             }
             if ("teacher".equals(identity)){
-                startActivityTo(TeacherSignInActivity.class,random_number);
+                startActivityTo(TeacherSignInActivity.class,id,name,mCourse);
             }
         }
 

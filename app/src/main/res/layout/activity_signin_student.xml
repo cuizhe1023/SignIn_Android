@@ -31,9 +31,58 @@
         </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="#ffff"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:textSize="16sp"
+            android:textColor="#272727"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="老师的ip地址:"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+        <TextView
+            android:id="@+id/tv_teacher_ip"
+            android:text=""
+            android:gravity="center_vertical"
+            android:textColor="#b95757"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="#ffff"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:textSize="16sp"
+            android:textColor="#272727"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="本机的ip地址:"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+        <TextView
+            android:id="@+id/tv_host_ip"
+            android:text=""
+            android:gravity="center_vertical"
+            android:textColor="#b95757"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
+
     <Button
         android:layout_margin="10dp"
-        android:id="@+id/member_sigin_btn"
+        android:id="@+id/btn_student_sign_in"
         android:textStyle="bold"
         android:textColor="@color/colorWhite"
         android:text="签到"

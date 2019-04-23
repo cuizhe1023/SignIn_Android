@@ -80,10 +80,10 @@ public class OkHttpUtil {
         Call call = null;
         try {
             FormBody.Builder builder = new FormBody.Builder();
-            for (HashMap.Entry<String, String> key:
-                    bodyMap.entrySet()) {
+            for (String key:
+                    bodyMap.keySet()) {
                 Log.e("sendRequest>>>>>>>>" + requestType, "key="+key+",value="+bodyMap.get(key));
-                builder.add(key.getKey(),key.getValue());
+                builder.add(key,bodyMap.get(key));
             }
             RequestBody body = builder.build();
             Request request = null;
