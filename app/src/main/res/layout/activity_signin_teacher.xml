@@ -137,6 +137,7 @@
 
     <LinearLayout
         android:layout_below="@+id/sv"
+        android:id="@+id/ll_no_sign_in_student"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -160,5 +161,10 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/no_sign_in_student_list"
+        android:layout_below="@+id/ll_no_sign_in_student"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

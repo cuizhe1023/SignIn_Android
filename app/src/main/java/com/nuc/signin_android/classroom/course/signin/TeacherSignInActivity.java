@@ -5,15 +5,22 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseActivity;
 import com.nuc.signin_android.entity.Course;
+import com.nuc.signin_android.entity.Student_SignIn;
+import com.nuc.signin_android.net.GetApi;
 import com.nuc.signin_android.net.PostApi;
+import com.nuc.signin_android.net.PutApi;
 import com.nuc.signin_android.utils.Constant;
 import com.nuc.signin_android.utils.ToastUtil;
 import com.nuc.signin_android.utils.net.ApiListener;
@@ -28,8 +35,10 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -55,18 +64,27 @@ public class TeacherSignInActivity extends BaseActivity {
     TextView receivedContent;
     @BindView(R.id.tv_decryptContent)
     TextView decryptContent;
+    @BindView(R.id.no_sign_in_student_list)
+    RecyclerView noSignInRecyclerView;
 
+
+    private List<Student_SignIn> list_sign_in = new ArrayList<>();
+    private List<Student_SignIn> noSignInList = new ArrayList<>();
     HashMap<String,String> params = new HashMap<>();
 
     private LocalService localService; // 用于启动监听的服务
     private ServiceConnection sc; // 服务连接
 
     private WifiUtils wifiUtils;
+    private LinearLayoutManager linearLayoutManager;
+    private SignInFragmentAdapter signInFragmentAdapter;
 
     private String teacherId;
     private String teacherName;
     private Course mCourse;
     private String signInId;
+    SimpleDateFormat simDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+    String nowDate = simDate.format(new Date());
 
     @Override
     protected void onStart() {
@@ -100,8 +118,6 @@ public class TeacherSignInActivity extends BaseActivity {
                 localService = localBinder.getService();
                 localService.startWaitDataThread();
                 ToastUtil.showToast(TeacherSignInActivity.this, "监听已启动");
-                // 向表中插入数据.
-                createSignInData();
             }
 
             @Override
@@ -115,8 +131,6 @@ public class TeacherSignInActivity extends BaseActivity {
         params.put("teacherId",teacherId);
         params.put("teacherName",teacherName);
         params.put("courseId",mCourse.getCourseId());
-        SimpleDateFormat simDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        String nowDate = simDate.format(new Date());
         params.put("signDate",nowDate);
         // 向表中添加数据
         new PostApi(Constant.URL_SIGNIN_CREATE,params).post(new ApiListener() {
@@ -130,7 +144,8 @@ public class TeacherSignInActivity extends BaseActivity {
                             signInId = api.mJson.getString("signInId");
                             Log.i(TAG, "run: signInId = " + signInId);
                             signInIdText.setText(signInId);
-
+                            // 初始化签到信息
+                            initSignInData();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -143,27 +158,53 @@ public class TeacherSignInActivity extends BaseActivity {
 
             }
         });
+        params = null;
+        params = new HashMap<>();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getData(String data) {
         receivedContent.setText(data);
-        Log.i(TAG, "getData: data = " + data);
         String decryptText = AESUtil.decrypt(Constant.password, data);
         decryptContent.setText(decryptText);
-        Log.i(TAG, "getData: 解码后 = " + AESUtil.decrypt(Constant.password, data));
         String studentInfo[] = decryptText.split(",");
         String id = studentInfo[0];
         String name = studentInfo[1];
+        String courseId = studentInfo[2];
         // 将签到结果插入数据库中.
-        Log.i(TAG, "getData: id = " + id + ", name = " + name );
+        Log.i(TAG, "getData: id = " + id + ", name = " + name + ", courseId = " + courseId);
         Log.i(TAG, "getData: signInId = " + signInId);
-        insertStudentSignIn();
+        insertStudentSignIn(id,signInId,courseId);
     }
 
-    private void insertStudentSignIn() {
+    private void insertStudentSignIn(String id, String signInId, String courseId) {
+        // 将签到者的数据更新在数据库，对其通过 id 对其进行状态进行置 1 操作
+        if (mCourse.getCourseId().equals(courseId)){
+            params.put("studentId",id);
+            params.put("signDate",nowDate);
+            params.put("signInId",signInId);
+            new PutApi(Constant.URL_STUDENTSIGNIN_UPDATESTATUS,params).put(new ApiListener() {
+                @Override
+                public void success(ApiUtil apiUtil) {
+                    PutApi api = (PutApi) apiUtil;
+                    String json = null;
+                    try {
+                        json = api.mJson.getString("studentName");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Log.i(TAG, "success: json = " + json);
+                    Log.e(TAG, "success: 更新数据成功！更新数据者：" + json);
+                }
 
+                @Override
+                public void failure(ApiUtil apiUtil) {
+
+                }
+            });
+        }
     }
+
 
     /**
      * 绑定service
@@ -179,6 +220,8 @@ public class TeacherSignInActivity extends BaseActivity {
         switch (view.getId()){
             case R.id.start_sign_in_btn:
                 connection();
+                // 向表中插入数据.
+                createSignInData();
                 break;
             case R.id.end_sign_in_btn:
                 if (sc != null)
@@ -189,15 +232,75 @@ public class TeacherSignInActivity extends BaseActivity {
                         e.printStackTrace();
                         ToastUtil.showToast(this,"您没有开启服务！");
                     }
+                getNoSignInStudent(signInId);
                 break;
         }
+    }
+
+    private void getNoSignInStudent(String signInId) {
+        params.put("signInId",signInId);
+        Log.i(TAG, "getNoSignInStudent: signInId = " + signInId);
+        new GetApi(Constant.URL_STUDENTSIGNIN_GET_NO_SIGN_IN_STUDENT,params).get(new ApiListener() {
+            @Override
+            public void success(ApiUtil apiUtil) {
+                GetApi api = (GetApi) apiUtil;
+                String json = api.mJsonArray.toString();
+                parseJSONWithGson(json);
+                Log.i(TAG, "success: 没签到的学生：");
+                for (Student_SignIn signIn :
+                        noSignInList) {
+                    Log.i(TAG, "success: studentName = " + signIn.getStudentName());
+
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        linearLayoutManager = new LinearLayoutManager(TeacherSignInActivity.this);
+                        noSignInRecyclerView.setLayoutManager(linearLayoutManager);
+                        signInFragmentAdapter = new SignInFragmentAdapter(TeacherSignInActivity.this,noSignInList,null);
+                        noSignInRecyclerView.setAdapter(signInFragmentAdapter);
+                    }
+                });
+            }
+
+            @Override
+            public void failure(ApiUtil apiUtil) {
+
+            }
+        });
+        params = null;
+        params = new HashMap<>();
+    }
+
+    private void parseJSONWithGson(String json) {
+        Gson gson = new Gson();
+        List<Student_SignIn> list = gson.fromJson(json,new TypeToken<List<Student_SignIn>>(){}.getType());
+        noSignInList = list;
+    }
+
+    private void initSignInData() {
+        Log.i(TAG, "initSignInData: signInId = " + signInIdText.getText().toString().trim());
+        params.put("signInId",signInIdText.getText().toString().trim());
+        params.put("signDate",nowDate);
+        params.put("courseId",mCourse.getCourseId());
+        new PostApi(Constant.URL_STUDENTSIGNIN_INITSIGNIN,params).post(new ApiListener() {
+            @Override
+            public void success(ApiUtil apiUtil) {
+                ToastUtil.showToast(TeacherSignInActivity.this,"初始化签到信息成功");
+            }
+
+            @Override
+            public void failure(ApiUtil apiUtil) {
+                ToastUtil.showToast(TeacherSignInActivity.this,"初始化签到信息失败");
+            }
+        });
+        params = null;
+        params = new HashMap<>();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (sc != null){
-            unbindService(sc);
-        }
+        EventBus.getDefault().unregister(this);
     }
 }

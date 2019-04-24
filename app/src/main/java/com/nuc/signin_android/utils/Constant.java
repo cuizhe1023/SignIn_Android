@@ -19,6 +19,7 @@ public class Constant {
     public static final String COURSE = "/course";
     public static final String SELECT_COURSE = "/select_course";
     public static final String SIGN_IN = "/sign_in";
+    public static final String STUDENTSIGNIN = "/studentSignIn";
 
     // http://10.0.116.44:8080/teacher/register
     public static final String URL_TEACHER_REGISTER = URL + TEACHER +"/register";
@@ -60,6 +61,9 @@ public class Constant {
 
     public static final String URL_SIGNIN_CREATE = URL + SIGN_IN + "/create";
 
+    public static final String URL_STUDENTSIGNIN_INITSIGNIN = URL + STUDENTSIGNIN + "/initSignIn";
 
+    public static final String URL_STUDENTSIGNIN_UPDATESTATUS = URL + STUDENTSIGNIN + "/updateStatus";
 
+    public static final String URL_STUDENTSIGNIN_GET_NO_SIGN_IN_STUDENT = URL + STUDENTSIGNIN + "/getNoSignInStudent";
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseFragment;
 import com.nuc.signin_android.entity.Course;
+import com.nuc.signin_android.entity.Student_SignIn;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;

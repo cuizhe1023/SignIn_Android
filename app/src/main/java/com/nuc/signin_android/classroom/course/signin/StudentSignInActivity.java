@@ -104,7 +104,7 @@ public class StudentSignInActivity extends BaseActivity {
     public void onStudentSignInBtnClicker(){
         before();
         if (isConnectAp){
-            String content = studentId + "," + studentName;
+            String content = studentId + "," + studentName + "," +mCourse.getCourseId();
             Log.e(TAG, "onStudentSignInBtnClicker: content = " + content);
 
             strServerIp = wifiUtils.getServerIp();
