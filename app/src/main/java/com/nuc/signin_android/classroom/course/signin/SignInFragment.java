@@ -3,6 +3,7 @@ package com.nuc.signin_android.classroom.course.signin;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -107,10 +108,11 @@ public class SignInFragment extends BaseFragment implements RapidFloatingActionC
     private void startActivityByPosition(int position) {
         if (position == 0){
             if ("student".equals(identity)){
-                startActivityTo(StudentSignInActivity.class,id,name,mCourse);
+                startActivityTo(StudentSignInActivity.class,id,name,mCourse,studentNumber);
             }
             if ("teacher".equals(identity)){
-                startActivityTo(TeacherSignInActivity.class,id,name,mCourse);
+                Log.i(TAG, "startActivityByPosition: studentNumber = " + studentNumber);
+                startActivityTo(TeacherSignInActivity.class,id,name,mCourse,studentNumber);
             }
         }
 

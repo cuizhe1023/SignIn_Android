@@ -43,6 +43,8 @@
         <activity android:name=".classroom.course.CourseActivity"/>
         <activity android:name=".classroom.course.signin.TeacherSignInActivity"/>
         <activity android:name=".classroom.course.signin.StudentSignInActivity"/>
+        <activity android:name=".classroom.course.signin.StudentLeaveReasonActivity"/>
+
         <service android:name=".utils.sign_in_utils.LocalService" />
     </application>
 

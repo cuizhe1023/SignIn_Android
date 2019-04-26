@@ -66,6 +66,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
         SelectCourse selectCourse = mSelectCourseList.get(i);
+        viewHolder.memberItemRank.setText(String.valueOf(i+1));
         viewHolder.memberItemStudentId.setText(selectCourse.getStudentId());
         viewHolder.memberItemStudentName.setText(selectCourse.getStudentName());
         viewHolder.memberItemStudentGender.setText(selectCourse.getGender());

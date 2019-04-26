@@ -13,6 +13,8 @@ public class Constant {
     public static final int CODE_SUCCESS = 1;// 连接成功
     public static final int CODE_UNKNOWN_HOST = 2;// 错误-未知的host
 
+    // 阿里云 ip ： http://47.94.220.113:8080
+    // 手机热点 192.168.43.152
     public static final String URL = "http://192.168.43.152:8080"; // IP地址请改为你自己的IP
     public static final String TEACHER = "/teacher";
     public static final String STUDENT = "/student";
@@ -61,9 +63,19 @@ public class Constant {
 
     public static final String URL_SIGNIN_CREATE = URL + SIGN_IN + "/create";
 
+    public static final String URL_SIGNIN_UPDATE_SIGN_IN_DATA = URL + SIGN_IN + "/updateSignInData";
+
     public static final String URL_STUDENTSIGNIN_INITSIGNIN = URL + STUDENTSIGNIN + "/initSignIn";
 
     public static final String URL_STUDENTSIGNIN_UPDATESTATUS = URL + STUDENTSIGNIN + "/updateStatus";
 
-    public static final String URL_STUDENTSIGNIN_GET_NO_SIGN_IN_STUDENT = URL + STUDENTSIGNIN + "/getNoSignInStudent";
+    public static final String URL_STUDENTSIGNIN_GET_NO_SIGN_IN_STUDENT = URL + STUDENTSIGNIN + "/getNoSignInStudentList";
+
+    public static final String URL_STUDENTSIGNIN_UPDAT_REASON = URL + STUDENTSIGNIN + "/updateReason";
+
+    public static final String URL_STUDENTSIGNIN_GET_NO_SIGNIN_STUDENT_NUMBER = URL + STUDENTSIGNIN + "/getNoSignInStudentNumber";
+
+    public static final String URL_STUDENTSIGNIN_GET_SIGNIN_STUDENT_NUMBER = URL + STUDENTSIGNIN + "/getSignInStudentNumber";
+
+    public static final String URL_STUDENTSIGNIN_GET_LEAVE_REASON = URL + STUDENTSIGNIN + "/getLeaveReason";
 }

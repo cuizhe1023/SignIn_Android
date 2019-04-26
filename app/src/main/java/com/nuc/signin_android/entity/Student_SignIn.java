@@ -1,5 +1,7 @@
 package com.nuc.signin_android.entity;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -8,7 +10,7 @@ import lombok.Data;
  * @Description:
  */
 @Data
-public class Student_SignIn {
+public class Student_SignIn implements Serializable {
     private Integer id;
 
     private Integer signInId;

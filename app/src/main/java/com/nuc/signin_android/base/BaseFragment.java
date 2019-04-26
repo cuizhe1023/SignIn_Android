@@ -31,6 +31,7 @@ public abstract class BaseFragment extends Fragment {
     protected String userId;
     protected String identity;
     protected Handler mainHandler = new Handler();
+    protected String studentNumber;
 
     @Nullable
     @Override
@@ -61,13 +62,14 @@ public abstract class BaseFragment extends Fragment {
         unbinder.unbind();// 解除绑定
     }
 
-    protected void startActivityTo(Class activityClass, String id, String name, Course course){
+    protected void startActivityTo(Class activityClass, String id, String name, Course course, String studentNumber){
         Intent intent = new Intent(getContext(),activityClass);
         Bundle bundle = new Bundle();
         // 把数据打包为 bundle
         bundle.putString("id",id);
         bundle.putString("name",name);
         bundle.putSerializable("course",course);
+        bundle.putString("studentNumber",studentNumber);
         // Intent 携带数据包
         intent.putExtras(bundle);
         startActivity(intent);

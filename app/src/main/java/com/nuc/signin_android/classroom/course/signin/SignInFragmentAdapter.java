@@ -70,6 +70,7 @@ public class SignInFragmentAdapter extends RecyclerView.Adapter<SignInFragmentAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Student_SignIn student_signIn = mSelectCourseList.get(i);
+        viewHolder.memberItemRank.setText(String.valueOf(i+1));
         viewHolder.memberItemStudentId.setText(student_signIn.getStudentId());
         viewHolder.memberItemStudentName.setText(student_signIn.getStudentName());
 

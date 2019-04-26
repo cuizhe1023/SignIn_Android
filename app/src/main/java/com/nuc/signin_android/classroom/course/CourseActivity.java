@@ -37,7 +37,6 @@ public class CourseActivity extends BaseActivity {
     @Override
     protected void logicActivity(Bundle savedInstanceState) {
         Intent intent = getIntent();
-//        courseId = intent.getExtras().getString("courseId");
         Bundle bundle = intent.getExtras();
         course = (Course) bundle.getSerializable("course");
         courseId = course.getCourseId();
