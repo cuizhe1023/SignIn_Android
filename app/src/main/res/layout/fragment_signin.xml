@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="#f4f8fa"
     tools:context="com.nuc.signin_android.classroom.course.signin.SignInFragment">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/do_appbar"
         android:layout_width="match_parent"
@@ -31,11 +32,36 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/do_appbar"
-        android:id="@+id/do_recycler_view"
+    <RelativeLayout
+        android:id="@+id/rl_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="32dp"
+        android:layout_below="@+id/do_appbar"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center_vertical"
+            android:text="历史签到记录"
+            android:textColor="#000000"
+            tools:ignore="RtlCompat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#d3d3d3" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/rl_title"
+        android:id="@+id/sign_in_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="RtlCompat" />
 
     <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
         xmlns:rfal="http://schemas.android.com/apk/res-auto"

@@ -86,13 +86,6 @@ public class MemberFragment extends BaseFragment {
 
         getStudentList(mCourse.getCourseId());
         getStudentNumber(mCourse.getCourseId());
-
-        String[] studentArr = sumMemberText.getText().toString().split(" ");
-        for (String str :
-                studentArr) {
-            Log.i(TAG, "getStudentNumber: str = " + str);
-        }
-        Log.i(TAG, "getStudentNumber: studentNumber = " + studentNumber);
     }
 
     private void getStudentNumber(String courseId) {
@@ -108,6 +101,7 @@ public class MemberFragment extends BaseFragment {
                     mainHandler.post(new Runnable() {
                         @Override
                         public void run() {
+                            studentNumber = sum;
                             sumMemberText.setText(sum + " 人");
                         }
                     });

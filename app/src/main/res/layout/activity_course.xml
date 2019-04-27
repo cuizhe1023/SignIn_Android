@@ -5,11 +5,12 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
+
     <FrameLayout
         android:id="@+id/course_frame"
         android:layout_marginBottom="51dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent" />
     <TextView
         android:layout_alignTop="@+id/class_bottom_menu"
         android:background="#cccccc"

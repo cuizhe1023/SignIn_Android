@@ -100,10 +100,10 @@ public class TeacherSignInActivity extends BaseActivity {
         teacherId = getIntent().getExtras().getString("id");
         teacherName = getIntent().getExtras().getString("name");
         studentNumber = getIntent().getExtras().getString("studentNumber");
+        Log.i(TAG, "logicActivity: studentNumber = " + studentNumber);
         mCourse = (Course) getIntent().getExtras().getSerializable("course");
 
         wifiUtils = new WifiUtils(getApplicationContext());
-        Log.i(TAG, "logicActivity: ");
         init();
     }
 
@@ -146,7 +146,6 @@ public class TeacherSignInActivity extends BaseActivity {
     }
 
     private void insertStudentSignIn(String id, String signInId, String courseId) {
-        Log.i(TAG, "insertStudentSignIn: ");
         // 将签到者的数据更新在数据库，对其通过 id 对其进行状态进行置 1 操作
         if (mCourse.getCourseId().equals(courseId)){
             params.put("studentId",id);
@@ -240,7 +239,7 @@ public class TeacherSignInActivity extends BaseActivity {
                         e.printStackTrace();
                         ToastUtil.showToast(this,"您没有开启服务！");
                     }
-                //getSignInStudentNumber(); // 在 Sign_In 表更新签到人数的信息
+                getSignInStudentNumber(); // 在 Sign_In 表更新签到人数的信息
                 getNoSignInStudent(); // 显示没有签到的学生列表
                 break;
         }
@@ -258,7 +257,7 @@ public class TeacherSignInActivity extends BaseActivity {
                     params = null;
                     params = new HashMap<>();
                     Log.i(TAG, "success: number = " + number);
-                    //  updateSignInData(number);
+                    updateSignInData(number);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

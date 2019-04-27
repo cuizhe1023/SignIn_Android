@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.OnClickerListener;
-import com.nuc.signin_android.classroom.course.member.MemberAdapter;
-import com.nuc.signin_android.entity.SelectCourse;
 import com.nuc.signin_android.entity.Student_SignIn;
 
 import java.util.ArrayList;

@@ -65,11 +65,15 @@ public class Constant {
 
     public static final String URL_SIGNIN_UPDATE_SIGN_IN_DATA = URL + SIGN_IN + "/updateSignInData";
 
+    public static final String URL_SIGNIN_GET_SIGN_IN_LIST = URL + SIGN_IN + "/getSignInList";
+
     public static final String URL_STUDENTSIGNIN_INITSIGNIN = URL + STUDENTSIGNIN + "/initSignIn";
 
     public static final String URL_STUDENTSIGNIN_UPDATESTATUS = URL + STUDENTSIGNIN + "/updateStatus";
 
     public static final String URL_STUDENTSIGNIN_GET_NO_SIGN_IN_STUDENT = URL + STUDENTSIGNIN + "/getNoSignInStudentList";
+
+    public static final String URL_STUDENTSIGNIN_GET_SIGN_IN_STUDENT = URL + STUDENTSIGNIN + "/getSignInStudentList";
 
     public static final String URL_STUDENTSIGNIN_UPDAT_REASON = URL + STUDENTSIGNIN + "/updateReason";
 

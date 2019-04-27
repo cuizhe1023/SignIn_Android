@@ -31,7 +31,7 @@ public abstract class BaseFragment extends Fragment {
     protected String userId;
     protected String identity;
     protected Handler mainHandler = new Handler();
-    protected String studentNumber;
+    protected static String studentNumber;
 
     @Nullable
     @Override

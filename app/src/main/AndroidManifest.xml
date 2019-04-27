@@ -44,6 +44,7 @@
         <activity android:name=".classroom.course.signin.TeacherSignInActivity"/>
         <activity android:name=".classroom.course.signin.StudentSignInActivity"/>
         <activity android:name=".classroom.course.signin.StudentLeaveReasonActivity"/>
+        <activity android:name=".classroom.course.signin.SignInInformationActivity"/>
 
         <service android:name=".utils.sign_in_utils.LocalService" />
     </application>

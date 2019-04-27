@@ -37,6 +37,8 @@ import butterknife.BindView;
  */
 public class ClassFragment extends BaseFragment implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
+    private static final String TAG = "ClassFragment";
+
     @BindView(R.id.class_fragment_recycler)
     RecyclerView classFragmentRecycler;
     @BindView(R.id.activity_main_rfab)
@@ -46,7 +48,6 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
 
     private RapidFloatingActionHelper rfabHelper;
     private List<Course>list_all = new ArrayList<>();
-    private static final String TAG = "ClassFragment";
     private HashMap<String,String> params = new HashMap<>();
 
     private ClassFragmentAdapter classFragmentAdapter;
