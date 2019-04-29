@@ -20,6 +20,7 @@ import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseFragment;
 import com.nuc.signin_android.entity.Course;
 import com.nuc.signin_android.entity.SelectCourse;
+import com.nuc.signin_android.net.DeleteApi;
 import com.nuc.signin_android.net.PostApi;
 import com.nuc.signin_android.net.UploadFileApi;
 import com.nuc.signin_android.utils.Constant;
@@ -43,8 +44,6 @@ public class CourseInfoFragment extends BaseFragment {
 
     private static final String TAG = "CourseInfoFragment";
 
-    @BindView(R.id.back_from_show_image)
-    ImageView backFromShowImage;
     @BindView(R.id.show_title_text)
     TextView showTitleText;
     @BindView(R.id.show_image)
@@ -69,10 +68,14 @@ public class CourseInfoFragment extends BaseFragment {
     TextView filePathText;
     @BindView(R.id.course_info_rl)
     RelativeLayout layout;
+    @BindView(R.id.download_info_rl)
+    RelativeLayout layout1;
     @BindView(R.id.course_info_cut_line1)
     TextView cutLine1;
     @BindView(R.id.course_info_cut_line2)
     TextView cutLine2;
+    @BindView(R.id.course_info_cut_line3)
+    TextView cutLine3;
 
     String path;
     private HashMap<String,String> params = new HashMap<>();
@@ -96,10 +99,12 @@ public class CourseInfoFragment extends BaseFragment {
         showTeacherNameText.setText(mCourse.getTeacherName());
         if ("student".equals(identity)){
             layout.setVisibility(View.INVISIBLE);
+            layout1.setVisibility(View.INVISIBLE);
             uploadFileBtn.setVisibility(View.INVISIBLE);
             endCourseBtn.setVisibility(View.INVISIBLE);
             cutLine1.setVisibility(View.INVISIBLE);
             cutLine2.setVisibility(View.INVISIBLE);
+            cutLine3.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -110,6 +115,32 @@ public class CourseInfoFragment extends BaseFragment {
     @Override
     protected int getResourcesLayout() {
         return R.layout.fragment_course_info;
+    }
+
+    @OnClick({R.id.end_class_btn})
+    public void endClassBtn(){
+        params.put("courseId",mCourse.getCourseId());
+        new DeleteApi(Constant.URL_COURSE_DELETECOURSE,params).delect(new ApiListener() {
+            @Override
+            public void success(ApiUtil apiUtil) {
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.showToast(getActivity(),"结束课程成功");
+                    }
+                });
+            }
+
+            @Override
+            public void failure(ApiUtil apiUtil) {
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.showToast(getActivity(),"请求失败");
+                    }
+                });
+            }
+        });
     }
 
     @OnClick(R.id.select_file_btn)

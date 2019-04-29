@@ -7,20 +7,32 @@
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/show_appbar"
         android:layout_width="match_parent"
         android:layout_height="42dp">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="创建课堂"
-            android:textColor="@color/colorWhite"
-            android:textStyle="bold" />
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/create_class_back"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                android:layout_marginLeft="5dp"
+                android:layout_centerVertical="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                tools:ignore="VectorDrawableCompat" />
+            <TextView
+                android:gravity="center"
+                android:text="创建课堂"
+                android:textStyle="bold"
+                android:textColor="#ffff"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:ignore="HardcodedText" />
+        </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
-
 
     <ImageView
         android:layout_gravity="center_horizontal"

@@ -35,6 +35,8 @@ public class StudentLeaveReasonActivity extends BaseActivity {
 
     private static final String TAG = "StudentLeaveReasonActivity";
 
+    @BindView(R.id.leave_reason_back_image)
+    ImageView leaveReasonBack;
     @BindView(R.id.leave_student_name_text)
     TextView leaveStudentName;
     @BindView(R.id.leave_student_id_text)
@@ -91,6 +93,11 @@ public class StudentLeaveReasonActivity extends BaseActivity {
     @Override
     protected int getLayoutView() {
         return R.layout.activity_leave_reason;
+    }
+
+    @OnClick(R.id.leave_reason_back_image)
+    public void onLeaveReasonBackImageClicker(){
+        finish();
     }
 
     @OnClick(R.id.leave_image)

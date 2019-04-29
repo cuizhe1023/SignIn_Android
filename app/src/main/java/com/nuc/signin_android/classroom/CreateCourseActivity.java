@@ -3,6 +3,7 @@ package com.nuc.signin_android.classroom;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.nuc.signin_android.R;
 import com.nuc.signin_android.base.BaseActivity;
@@ -26,7 +27,8 @@ public class CreateCourseActivity extends BaseActivity {
 
     private static final String TAG = "CreateClassActivity";
 
-
+    @BindView(R.id.create_class_back)
+    ImageView createClassBack;
     @BindView(R.id.class_id_edit)
     EditText classIdEdit;
     @BindView(R.id.course_name_edit)
@@ -47,6 +49,11 @@ public class CreateCourseActivity extends BaseActivity {
     @Override
     protected int getLayoutView() {
         return R.layout.activity_create_class;
+    }
+
+    @OnClick(R.id.create_class_back)
+    public void onCreateClassBackClicker(){
+        finish();
     }
 
     @OnClick(R.id.create_course_btn)

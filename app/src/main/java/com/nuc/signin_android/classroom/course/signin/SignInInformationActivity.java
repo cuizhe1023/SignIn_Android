@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -23,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @Author: cuizhe
@@ -33,6 +35,8 @@ public class SignInInformationActivity extends BaseActivity {
 
     private static final String TAG = "SignInInforActivity";
 
+    @BindView(R.id.sigin_information_back)
+    ImageView signInInformationBack;
     @BindView(R.id.no_sign_in_number_text)
     TextView noSignInNumberText;
     @BindView(R.id.no_sign_in_recycler_view)
@@ -59,6 +63,11 @@ public class SignInInformationActivity extends BaseActivity {
         showNoSignInStudentList();
         showSignInStudentNumber();
         showSignInStudentList();
+    }
+
+    @OnClick(R.id.sigin_information_back)
+    public void onSignInInformationBackClicker(){
+        finish();
     }
 
     private void showNoSignInStudentNumber() {

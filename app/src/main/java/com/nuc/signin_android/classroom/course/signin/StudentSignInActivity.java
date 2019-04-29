@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,8 @@ public class StudentSignInActivity extends BaseActivity {
 
     private static final String TAG = "StudentSignInActivity";
 
+    @BindView(R.id.student_signin_back)
+    ImageView studentSigninBack;
     @BindView(R.id.tv_teacher_ip)
     TextView teacherIpText; // 教师端的 IP 地址
     @BindView(R.id.tv_host_ip)
@@ -76,6 +79,11 @@ public class StudentSignInActivity extends BaseActivity {
     @Override
     protected int getLayoutView() {
         return R.layout.activity_signin_student;
+    }
+
+    @OnClick(R.id.student_signin_back)
+    public void onStudentSigninBackClicker(){
+        finish();
     }
 
     /**

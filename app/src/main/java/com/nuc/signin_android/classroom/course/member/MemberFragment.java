@@ -38,8 +38,6 @@ public class MemberFragment extends BaseFragment {
 
     private static final String TAG = "MemberFragment";
 
-    @BindView(R.id.back_from_member_image)
-    ImageView backFromMemberImage;
     @BindView(R.id.member_title_text)
     TextView memberTitleText;
     @BindView(R.id.tv_member_student_list)

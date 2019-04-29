@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -53,6 +54,8 @@ public class TeacherSignInActivity extends BaseActivity {
 
     private static final String TAG = "TeacherSignInActivity";
 
+    @BindView(R.id.teacher_signin_back)
+    ImageView teacherSignInBack;
     @BindView(R.id.start_sign_in_btn)
     Button startSignInBtn;
     @BindView(R.id.end_sign_in_btn)
@@ -69,7 +72,7 @@ public class TeacherSignInActivity extends BaseActivity {
     RecyclerView noSignInRecyclerView;
 
     private List<Student_SignIn> noSignInList = new ArrayList<>();
-    HashMap<String,String> params = new HashMap<>();
+    HashMap<String, String> params = new HashMap<>();
 
     private LocalService localService; // 用于启动监听的服务
     private ServiceConnection sc; // 服务连接
@@ -90,7 +93,7 @@ public class TeacherSignInActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         // 注册 EvenBus
-        if (!EventBus.getDefault().isRegistered(this)){
+        if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
     }
@@ -142,16 +145,16 @@ public class TeacherSignInActivity extends BaseActivity {
         // 将签到结果插入数据库中.
         Log.i(TAG, "getData: id = " + id + ", name = " + name + ", courseId = " + courseId);
         Log.i(TAG, "getData: signInId = " + signInId);
-        insertStudentSignIn(id,signInId,courseId);
+        insertStudentSignIn(id, signInId, courseId);
     }
 
     private void insertStudentSignIn(String id, String signInId, String courseId) {
         // 将签到者的数据更新在数据库，对其通过 id 对其进行状态进行置 1 操作
-        if (mCourse.getCourseId().equals(courseId)){
-            params.put("studentId",id);
-            params.put("signDate",nowDate);
-            params.put("signInId",signInId);
-            new PutApi(Constant.URL_STUDENTSIGNIN_UPDATESTATUS,params).put(new ApiListener() {
+        if (mCourse.getCourseId().equals(courseId)) {
+            params.put("studentId", id);
+            params.put("signDate", nowDate);
+            params.put("signInId", signInId);
+            new PutApi(Constant.URL_STUDENTSIGNIN_UPDATESTATUS, params).put(new ApiListener() {
                 @Override
                 public void success(ApiUtil apiUtil) {
                     PutApi api = (PutApi) apiUtil;
@@ -184,16 +187,16 @@ public class TeacherSignInActivity extends BaseActivity {
 
     private void createSignInData() {
         Log.i(TAG, "createSignInData: ");
-        params.put("teacherId",teacherId);
-        params.put("teacherName",teacherName);
-        params.put("courseId",mCourse.getCourseId());
-        params.put("signDate",nowDate);
+        params.put("teacherId", teacherId);
+        params.put("teacherName", teacherName);
+        params.put("courseId", mCourse.getCourseId());
+        params.put("signDate", nowDate);
         Log.i(TAG, "createSignInData: teacherId = " + teacherId);
         Log.i(TAG, "createSignInData: teacherName = " + teacherName);
         Log.i(TAG, "createSignInData: courseId = " + mCourse.getCourseId());
         Log.i(TAG, "createSignInData: signDate = " + nowDate);
         // 向表中添加数据
-        new PostApi(Constant.URL_SIGNIN_CREATE,params).post(new ApiListener() {
+        new PostApi(Constant.URL_SIGNIN_CREATE, params).post(new ApiListener() {
             @Override
             public void success(ApiUtil apiUtil) {
                 PostApi api = (PostApi) apiUtil;
@@ -222,9 +225,9 @@ public class TeacherSignInActivity extends BaseActivity {
         params = new HashMap<>();
     }
 
-    @OnClick({R.id.start_sign_in_btn,R.id.end_sign_in_btn})
-    public void onTeacherSignInBtnClicker(View view){
-        switch (view.getId()){
+    @OnClick({R.id.start_sign_in_btn, R.id.end_sign_in_btn, R.id.teacher_signin_back})
+    public void onTeacherSignInBtnClicker(View view) {
+        switch (view.getId()) {
             case R.id.start_sign_in_btn:
                 connection();
                 // 向表中插入数据.
@@ -234,21 +237,26 @@ public class TeacherSignInActivity extends BaseActivity {
                 if (sc != null)
                     try {
                         unbindService(sc);
-                        ToastUtil.showToast(this,"结束签到");
+                        ToastUtil.showToast(this, "结束签到");
                     } catch (Exception e) {
                         e.printStackTrace();
-                        ToastUtil.showToast(this,"您没有开启服务！");
+                        ToastUtil.showToast(this, "您没有开启服务！");
                     }
                 getSignInStudentNumber(); // 在 Sign_In 表更新签到人数的信息
                 getNoSignInStudent(); // 显示没有签到的学生列表
+                break;
+            case R.id.teacher_signin_back:
+                finish();
+                break;
+            default:
                 break;
         }
     }
 
     private void getSignInStudentNumber() {
         // 获取没有签到的学生人数
-        params.put("signInId",signInId);
-        new GetApi(Constant.URL_STUDENTSIGNIN_GET_SIGNIN_STUDENT_NUMBER,params).get(new ApiListener() {
+        params.put("signInId", signInId);
+        new GetApi(Constant.URL_STUDENTSIGNIN_GET_SIGNIN_STUDENT_NUMBER, params).get(new ApiListener() {
             @Override
             public void success(ApiUtil apiUtil) {
                 GetApi api = (GetApi) apiUtil;
@@ -273,11 +281,11 @@ public class TeacherSignInActivity extends BaseActivity {
     }
 
     private void updateSignInData(int number) {
-        params.put("signInId",signInId);
-        params.put("arriveNumber",String.valueOf(number));
-        params.put("studentNumber",studentNumber);
+        params.put("signInId", signInId);
+        params.put("arriveNumber", String.valueOf(number));
+        params.put("studentNumber", studentNumber);
 
-        new PutApi(Constant.URL_SIGNIN_UPDATE_SIGN_IN_DATA,params).put(new ApiListener() {
+        new PutApi(Constant.URL_SIGNIN_UPDATE_SIGN_IN_DATA, params).put(new ApiListener() {
             @Override
             public void success(ApiUtil apiUtil) {
                 Log.i(TAG, "success: 更新数据成功");
@@ -294,9 +302,9 @@ public class TeacherSignInActivity extends BaseActivity {
     }
 
     private void getNoSignInStudent() {
-        params.put("signInId",signInId);
+        params.put("signInId", signInId);
         Log.i(TAG, "getNoSignInStudent: signInId = " + signInId);
-        new GetApi(Constant.URL_STUDENTSIGNIN_GET_NO_SIGN_IN_STUDENT,params).get(new ApiListener() {
+        new GetApi(Constant.URL_STUDENTSIGNIN_GET_NO_SIGN_IN_STUDENT, params).get(new ApiListener() {
             @Override
             public void success(ApiUtil apiUtil) {
                 GetApi api = (GetApi) apiUtil;
@@ -316,11 +324,11 @@ public class TeacherSignInActivity extends BaseActivity {
                                 new OnClickerListener() {
                                     @Override
                                     public void click(int position, View view) {
-                                        Log.e(TAG, "click: noSignInList.get("+position+") = " + noSignInList.get(position));
-                                        Intent intent = new Intent(TeacherSignInActivity.this,StudentLeaveReasonActivity.class);
+                                        Log.e(TAG, "click: noSignInList.get(" + position + ") = " + noSignInList.get(position));
+                                        Intent intent = new Intent(TeacherSignInActivity.this, StudentLeaveReasonActivity.class);
                                         Bundle bundle = new Bundle();
                                         bundle.putSerializable("student", noSignInList.get(position));
-                                        bundle.putString("signInId",signInId);
+                                        bundle.putString("signInId", signInId);
                                         intent.putExtras(bundle);
                                         startActivity(intent);
                                     }
@@ -341,22 +349,23 @@ public class TeacherSignInActivity extends BaseActivity {
 
     private void parseJSONWithGson(String json) {
         Gson gson = new Gson();
-        List<Student_SignIn> list = gson.fromJson(json,new TypeToken<List<Student_SignIn>>(){}.getType());
+        List<Student_SignIn> list = gson.fromJson(json, new TypeToken<List<Student_SignIn>>() {
+        }.getType());
         noSignInList = list;
     }
 
     private void initSignInData() {
         Log.i(TAG, "initSignInData: signInId = " + signInIdText.getText().toString().trim());
-        params.put("signInId",signInIdText.getText().toString().trim());
-        params.put("signDate",nowDate);
-        params.put("courseId",mCourse.getCourseId());
-        new PostApi(Constant.URL_STUDENTSIGNIN_INITSIGNIN,params).post(new ApiListener() {
+        params.put("signInId", signInIdText.getText().toString().trim());
+        params.put("signDate", nowDate);
+        params.put("courseId", mCourse.getCourseId());
+        new PostApi(Constant.URL_STUDENTSIGNIN_INITSIGNIN, params).post(new ApiListener() {
             @Override
             public void success(ApiUtil apiUtil) {
                 mainHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showToast(TeacherSignInActivity.this,"初始化签到信息成功");
+                        ToastUtil.showToast(TeacherSignInActivity.this, "初始化签到信息成功");
                     }
                 });
             }
@@ -366,7 +375,7 @@ public class TeacherSignInActivity extends BaseActivity {
                 mainHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showToast(TeacherSignInActivity.this,"初始化签到信息失败");
+                        ToastUtil.showToast(TeacherSignInActivity.this, "初始化签到信息失败");
                     }
                 });
             }

@@ -14,7 +14,7 @@
             <ImageView
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
-                android:id="@+id/xuanshang_get_bank_image"
+                android:id="@+id/leave_reason_back_image"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
