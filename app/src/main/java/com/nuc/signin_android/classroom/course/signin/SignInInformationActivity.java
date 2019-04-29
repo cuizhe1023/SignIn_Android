@@ -63,14 +63,19 @@ public class SignInInformationActivity extends BaseActivity {
 
     private void showNoSignInStudentNumber() {
         params.put("signInId", signInId);
-        new GetApi(Constant.URL_STUDENTSIGNIN_GET_NO_SIGNIN_STUDENT_NUMBER,params).get(new ApiListener() {
-            @SuppressLint("SetTextI18n")
+        new GetApi(Constant.URL_STUDENTSIGNIN_GET_NO_SIGNIN_STUDENT_NUMBER, params).get(new ApiListener() {
             @Override
             public void success(ApiUtil apiUtil) {
                 GetApi api = (GetApi) apiUtil;
                 try {
                     String number = api.mJson.getString("noSignIn");
-                    noSignInNumberText.setText(number + " 人");
+                    mainHandler.post(new Runnable() {
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void run() {
+                            noSignInNumberText.setText(number + " 人");
+                        }
+                    });
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -98,7 +103,7 @@ public class SignInInformationActivity extends BaseActivity {
                     public void run() {
                         linearLayoutManager = new LinearLayoutManager(SignInInformationActivity.this);
                         noSignInRecyclerView.setLayoutManager(linearLayoutManager);
-                        adapter = new SignInFragmentAdapter(SignInInformationActivity.this,noSignInList,null);
+                        adapter = new SignInFragmentAdapter(SignInInformationActivity.this, noSignInList, null);
                         noSignInRecyclerView.setAdapter(adapter);
                     }
                 });
@@ -115,14 +120,19 @@ public class SignInInformationActivity extends BaseActivity {
 
     private void showSignInStudentNumber() {
         params.put("signInId", signInId);
-        new GetApi(Constant.URL_STUDENTSIGNIN_GET_SIGNIN_STUDENT_NUMBER,params).get(new ApiListener() {
-            @SuppressLint("SetTextI18n")
+        new GetApi(Constant.URL_STUDENTSIGNIN_GET_SIGNIN_STUDENT_NUMBER, params).get(new ApiListener() {
             @Override
             public void success(ApiUtil apiUtil) {
                 GetApi api = (GetApi) apiUtil;
                 try {
                     String number = api.mJson.getString("signIn");
-                    signInNumberText.setText(number + " 人");
+                    mainHandler.post(new Runnable() {
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void run() {
+                            signInNumberText.setText(number + " 人");
+                        }
+                    });
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -149,7 +159,7 @@ public class SignInInformationActivity extends BaseActivity {
                     public void run() {
                         linearLayoutManager = new LinearLayoutManager(SignInInformationActivity.this);
                         signInRecyclerView.setLayoutManager(linearLayoutManager);
-                        adapter = new SignInFragmentAdapter(SignInInformationActivity.this,signInList,null);
+                        adapter = new SignInFragmentAdapter(SignInInformationActivity.this, signInList, null);
                         signInRecyclerView.setAdapter(adapter);
                     }
                 });
@@ -166,16 +176,14 @@ public class SignInInformationActivity extends BaseActivity {
 
     private void parseSignInListJSONWithGson(String json) {
         Gson gson = new Gson();
-        List<Student_SignIn> list = gson.fromJson(json, new TypeToken<List<Student_SignIn>>() {
+        signInList = gson.fromJson(json, new TypeToken<List<Student_SignIn>>() {
         }.getType());
-        signInList = list;
     }
 
     private void parseNoSignInListJSONWithGson(String json) {
         Gson gson = new Gson();
-        List<Student_SignIn> list = gson.fromJson(json, new TypeToken<List<Student_SignIn>>() {
+        noSignInList = gson.fromJson(json, new TypeToken<List<Student_SignIn>>() {
         }.getType());
-        noSignInList = list;
     }
 
     @Override

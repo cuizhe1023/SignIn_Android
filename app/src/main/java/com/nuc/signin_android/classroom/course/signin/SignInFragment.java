@@ -130,7 +130,7 @@ public class SignInFragment extends BaseFragment implements RapidFloatingActionC
 
     private void updateDate() {
         // 更新该课程的签到信息
-        if (list_all.size() != 0) {
+        if (0 != list_all.size()) {
             list_all.clear();
         }
 
@@ -149,7 +149,7 @@ public class SignInFragment extends BaseFragment implements RapidFloatingActionC
                         list_all) {
                     Log.e(TAG, "success: signInId = " + signIn.getSignInId());
                     Log.e(TAG, "success: teacherId = " + signIn.getTeacherId());
-                    Log.e(TAG, "success: teacherName = "  + signIn.getTeacherName());
+                    Log.e(TAG, "success: teacherName = " + signIn.getTeacherName());
                     Log.e(TAG, "success: date = " + signIn.getSignDate());
                     Log.e(TAG, "success: courseId = " + signIn.getCourseId());
                     Log.e(TAG, "success: arriveNumber = " + signIn.getArriveNumber());
@@ -163,8 +163,8 @@ public class SignInFragment extends BaseFragment implements RapidFloatingActionC
                         adapter = new SignInRecordAdapter(getActivity(), list_all, new OnClickerListener() {
                             @Override
                             public void click(int position, View view) {
-                                Log.e(TAG, "click: noSignInList.get("+position+") = " + list_all.get(position));
-                                Intent intent = new Intent(getActivity(),SignInInformationActivity.class);
+                                Log.e(TAG, "click: noSignInList.get(" + position + ") = " + list_all.get(position));
+                                Intent intent = new Intent(getActivity(), SignInInformationActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putString("signInId", String.valueOf(list_all.get(position).getSignInId()));
                                 intent.putExtras(bundle);
@@ -185,8 +185,8 @@ public class SignInFragment extends BaseFragment implements RapidFloatingActionC
 
     private void parseJSONWithGson(String json) {
         Gson gson = new Gson();
-        List<SignIn> courseList = gson.fromJson(json, new TypeToken<List<SignIn>>() {}.getType());
-        list_all = courseList;
+        list_all = gson.fromJson(json, new TypeToken<List<SignIn>>() {
+        }.getType());
     }
 
     @Override

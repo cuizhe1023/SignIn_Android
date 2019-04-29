@@ -1,5 +1,6 @@
 package com.nuc.signin_android.classroom.course.member;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -99,6 +100,7 @@ public class MemberFragment extends BaseFragment {
                     String sum = json.getString("sum");
                     Log.i(TAG, "success: 学生人数有:" + sum + " 人。");
                     mainHandler.post(new Runnable() {
+                        @SuppressLint("SetTextI18n")
                         @Override
                         public void run() {
                             studentNumber = sum;
@@ -156,8 +158,7 @@ public class MemberFragment extends BaseFragment {
 
     private void parseJSONWithGson(String jsonData) {
         Gson gson = new Gson();
-        List<SelectCourse> courseList = gson.fromJson(jsonData,new TypeToken<List<SelectCourse>>(){}.getType());
-        list_all = courseList;
+        list_all = gson.fromJson(jsonData,new TypeToken<List<SelectCourse>>(){}.getType());
     }
 
     @Override

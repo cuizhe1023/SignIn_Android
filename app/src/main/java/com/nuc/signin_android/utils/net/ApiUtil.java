@@ -42,7 +42,6 @@ public abstract class ApiUtil {
 
         @Override
         public void onFailure(Call call, IOException e) {
-            e.printStackTrace();
             mApiListener.failure(ApiUtil.this);
         }
     };

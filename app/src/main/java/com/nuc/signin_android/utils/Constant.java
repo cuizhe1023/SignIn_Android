@@ -15,6 +15,7 @@ public class Constant {
 
     // 阿里云 ip ： http://47.94.220.113:8080
     // 手机热点 192.168.43.152
+    // 连接实验室网线 10.0.116.9
     public static final String URL = "http://192.168.43.152:8080"; // IP地址请改为你自己的IP
     public static final String TEACHER = "/teacher";
     public static final String STUDENT = "/student";
