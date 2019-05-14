@@ -284,7 +284,7 @@ public class TeacherSignInActivity extends BaseActivity {
         params.put("signInId", signInId);
         params.put("arriveNumber", String.valueOf(number));
         params.put("studentNumber", studentNumber);
-
+        System.out.println("studentNumber = " + studentNumber);
         new PutApi(Constant.URL_SIGNIN_UPDATE_SIGN_IN_DATA, params).put(new ApiListener() {
             @Override
             public void success(ApiUtil apiUtil) {

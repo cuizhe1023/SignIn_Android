@@ -120,6 +120,8 @@ public class StudentSignInActivity extends BaseActivity {
             if (wifiUtils.IsIpv4(strServerIp)){
                 new SendDataThread(strServerIp,Constant.port, AESUtil.encrypt(Constant.password,content)).start();
                 showProgressDialog("尝试发送数据到\n\t\t" + strServerIp, true);
+                hostIpText.setText(wifiUtils.getLocalIp());
+                teacherIpText.setText(wifiUtils.getServerIp());
             } else {
                 ToastUtil.showToast(this, "IP不合法!");
             }

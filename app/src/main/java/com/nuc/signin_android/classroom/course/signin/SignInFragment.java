@@ -2,6 +2,7 @@ package com.nuc.signin_android.classroom.course.signin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.nuc.signin_android.entity.Course;
 import com.nuc.signin_android.entity.SignIn;
 import com.nuc.signin_android.net.GetApi;
 import com.nuc.signin_android.utils.Constant;
+import com.nuc.signin_android.utils.ToastUtil;
 import com.nuc.signin_android.utils.net.ApiListener;
 import com.nuc.signin_android.utils.net.ApiUtil;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
@@ -25,11 +27,21 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * @Author: cuizhe
@@ -42,6 +54,8 @@ public class SignInFragment extends BaseFragment implements RapidFloatingActionC
 
     @BindView(R.id.do_title_text)
     TextView doTitleText;
+    @BindView(R.id.student_statistics)
+    TextView studentStatisticsText;
     @BindView(R.id.sign_in_recycler_view)
     RecyclerView signInRecyclerView;
     @BindView(R.id.do_fbtn)
@@ -187,6 +201,57 @@ public class SignInFragment extends BaseFragment implements RapidFloatingActionC
         Gson gson = new Gson();
         list_all = gson.fromJson(json, new TypeToken<List<SignIn>>() {
         }.getType());
+    }
+
+    @OnClick(R.id.student_statistics)
+    public void onStatisticsClicker(){
+        String url = Constant.URL_STUDENTSIGNIN_DOWNLOADRESULT+"?courseId="+mCourse.getCourseId();
+        Log.e(TAG, "onStatisticsClicker: lur = " + url );
+
+        Request.Builder builder = new Request.Builder();
+        Request request = builder.get().url(url).build();
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        // 将 Request 封装为 Call
+        Call call = mOkHttpClient.newCall(request);
+
+        // 执行call
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i(TAG, "onFailure: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.i(TAG, "onResponse: ");
+                InputStream is = response.body() != null ? response.body().byteStream() : null;
+                Log.i(TAG, "onResponse: is = " + is);
+                int len = 0;
+                File file = new File(Environment.getExternalStorageDirectory()+"/download/","test.xls");
+                byte[] buf = new byte[1024];
+                Log.i(TAG, "onResponse: file.name = " + file.getName());
+                Log.i(TAG, "onResponse: file.path = " + file.getPath());
+                Log.i(TAG, "onResponse: file.isEmpty = " + file.exists());
+                Log.i(TAG, "onResponse: buf = " + buf.toString());
+                FileOutputStream fos = new FileOutputStream(file);
+                Log.i(TAG, "onResponse: fos = " + fos);
+                while ((len = is != null ? is.read(buf) : 0)!=-1){
+                    Log.i(TAG, "onResponse: len = " + len);
+                    fos.write(buf,0,len);
+                }
+                fos.flush();
+                fos.close();
+                is.close();
+                Log.i(TAG, "download success");
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.showToast(getActivity(),"下载成功！");
+                    }
+                });
+            }
+        });
     }
 
     @Override

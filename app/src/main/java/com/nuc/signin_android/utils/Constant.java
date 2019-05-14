@@ -16,7 +16,7 @@ public class Constant {
     // 阿里云 ip ： http://47.94.220.113:8080
     // 手机热点 192.168.43.152
     // 连接实验室网线 10.0.116.9
-    private static final String URL = "http://10.0.116.9:8080"; // IP地址请改为你自己的IP
+    private static final String URL = "http://47.94.220.113:8080"; // IP地址请改为你自己的IP
     private static final String TEACHER = "/teacher";
     private static final String STUDENT = "/student";
     private static final String COURSE = "/course";
@@ -54,6 +54,8 @@ public class Constant {
     // http://10.0.116.44:8080/course/upload
     public static final String URL_COURSE_UPLOADFILE = URL + COURSE + "/upload";
 
+    public static final String URL_COURSE_DOWNLOAD = URL + COURSE + "/download";
+
     public static final String URL_COURSE_STUDENTCOURSE = URL + COURSE + "/studentCourse";
 
     public static final String URL_COURSE_DELETECOURSE = URL + COURSE + "/deleteCourse";
@@ -85,4 +87,6 @@ public class Constant {
     public static final String URL_STUDENTSIGNIN_GET_SIGNIN_STUDENT_NUMBER = URL + STUDENTSIGNIN + "/getSignInStudentNumber";
 
     public static final String URL_STUDENTSIGNIN_GET_LEAVE_REASON = URL + STUDENTSIGNIN + "/getLeaveReason";
+
+    public static final String URL_STUDENTSIGNIN_DOWNLOADRESULT = URL + STUDENTSIGNIN + "/downloadResult";
 }

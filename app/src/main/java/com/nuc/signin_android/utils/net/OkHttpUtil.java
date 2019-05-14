@@ -28,12 +28,12 @@ public class OkHttpUtil {
 
     private static final String TAG = "OkHttpUtil";
 
-    public enum REQUEST_TYPE{
-        POST,PUT,DELECT
+    public enum REQUEST_TYPE {
+        POST, PUT, DELECT
     }
 
-    public static void init(){
-        if (mOkHttpClient == null){
+    public static void init() {
+        if (mOkHttpClient == null) {
             OkHttpClient.Builder builder = new OkHttpClient.Builder()
                     .connectTimeout(5000, TimeUnit.MILLISECONDS)
                     .readTimeout(5000, TimeUnit.MILLISECONDS)
@@ -45,19 +45,19 @@ public class OkHttpUtil {
     /**
      * 封装的 get 请求
      *
-     * @param url URL
+     * @param url            URL
      * @param okHttpCallBack 回调
-     * @param params get 请求的参数列表
+     * @param params         get 请求的参数列表
      */
-    public static void get(String url, OkHttpCallBack okHttpCallBack, HashMap<String,String> params){
+    public static void get(String url, OkHttpCallBack okHttpCallBack, HashMap<String, String> params) {
         Call call = null;
         try {
             HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
 
-            if (params != null){
-                for (String key:params.keySet()) {
-                    Log.e("GET>>>>>>>>>>>>>", "key="+key+",value="+params.get(key));
-                    urlBuilder.setQueryParameter(key,params.get(key));
+            if (params != null) {
+                for (String key : params.keySet()) {
+                    Log.e("GET>>>>>>>>>>>>>", "key=" + key + ",value=" + params.get(key));
+                    urlBuilder.setQueryParameter(key, params.get(key));
                 }
             }
             Request request = new Request.Builder().url(urlBuilder.build()).get().build();
@@ -71,23 +71,23 @@ public class OkHttpUtil {
     /**
      * 封装的 sendRequest 请求
      *
-     * @param url URL
+     * @param url            URL
      * @param okHttpCallBack 回调
      */
     public static void sendRequest(String url, OkHttpCallBack okHttpCallBack,
-                                   HashMap<String,String> bodyMap,
-                                   REQUEST_TYPE requestType){
+                                   HashMap<String, String> bodyMap,
+                                   REQUEST_TYPE requestType) {
         Call call = null;
         try {
             FormBody.Builder builder = new FormBody.Builder();
-            for (String key:
+            for (String key :
                     bodyMap.keySet()) {
-                Log.e("sendRequest>>>>>>>>" + requestType, "key="+key+",value="+bodyMap.get(key));
-                builder.add(key,bodyMap.get(key));
+                Log.e("sendRequest>>>>>>>>" + requestType, "key=" + key + ",value=" + bodyMap.get(key));
+                builder.add(key, bodyMap.get(key));
             }
             RequestBody body = builder.build();
             Request request = null;
-            switch (requestType){
+            switch (requestType) {
                 case POST:
                     request = new Request.Builder().post(body).url(url).build();
                     break;
@@ -108,26 +108,26 @@ public class OkHttpUtil {
     /**
      * 封装上传文件的请求
      *
-     * @param url URL
+     * @param url            URL
      * @param okHttpCallBack 回调
      */
-    public static void uploadFile(String url, OkHttpCallBack okHttpCallBack, HashMap<String,String> bodyMap){
+    public static void uploadFile(String url, OkHttpCallBack okHttpCallBack, HashMap<String, String> bodyMap) {
         Call call = null;
         String filePath = bodyMap.get("filePath");
         String courseId = bodyMap.get("courseId");
-        Log.e(TAG, "uploadFile: filePath = " + filePath );
-        Log.e(TAG, "uploadFile: courseId = " + courseId );
+        Log.e(TAG, "uploadFile: filePath = " + filePath);
+        Log.e(TAG, "uploadFile: courseId = " + courseId);
         File file = new File(filePath);
         Log.i(TAG, "uploadFile: file.getName = " + file.getName());
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("courseId",courseId)
-                .addFormDataPart("file",file.getName(),
-                        RequestBody.create(MediaType.parse("application/vnd.ms-excel"),file));
+                .addFormDataPart("courseId", courseId)
+                .addFormDataPart("file", file.getName(),
+                        RequestBody.create(MediaType.parse("application/vnd.ms-excel"), file));
 
         RequestBody requestBody = builder.build();
         Request request = new Request.Builder()
-                .url(Constant.URL_COURSE_UPLOADFILE)
+                .url(url)
                 .post(requestBody)
                 .build();
 

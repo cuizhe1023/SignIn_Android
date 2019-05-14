@@ -9,4 +9,6 @@
     <color name="write">#ffffff</color>
     <color name="theme">#03A9F4</color>
     <color name="bottom_navigation_normal">#CCCCCC</color>
+    <color name="colorBlue">#00BBDD</color>
+    <color name="blueButton">#14C0E0</color>
 </resources>

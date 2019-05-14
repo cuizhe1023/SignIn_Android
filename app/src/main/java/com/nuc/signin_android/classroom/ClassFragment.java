@@ -82,6 +82,10 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
                 rfaContent
         ).build();
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
+
+        if ("student".equals(identity)){
+            activityMainRfab.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -151,7 +155,6 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
                         classFragmentRecycler.setAdapter(classFragmentAdapter);
                     }
                 });
-
             }
 
             @Override
@@ -199,7 +202,6 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
                         classFragmentRecycler.setAdapter(classFragmentAdapter);
                     }
                 });
-
             }
 
             @Override
@@ -211,15 +213,7 @@ public class ClassFragment extends BaseFragment implements RapidFloatingActionCo
 
     private void parseJSONWithGson(String jsonData){
         Gson gson = new Gson();
-        List<Course> courseList = gson.fromJson(jsonData,new TypeToken<List<Course>>(){}.getType());
-        list_all = courseList;
-        for (Course course :
-                courseList) {
-            Log.e(TAG, "parseJSONWithGson: courseId = " + course.getCourseId());
-            Log.e(TAG, "parseJSONWithGson: classId = "  + course.getClassId());
-            Log.e(TAG, "parseJSONWithGson: courseName = " + course.getCourseName());
-            Log.e(TAG, "parseJSONWithGson: courseTeacherId = " + course.getTeacherId());
-        }
+        list_all = gson.fromJson(jsonData,new TypeToken<List<Course>>(){}.getType());
     }
 
     @Override

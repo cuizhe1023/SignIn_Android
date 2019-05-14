@@ -83,10 +83,14 @@
     <Button
         android:layout_margin="10dp"
         android:id="@+id/btn_student_sign_in"
-        android:textStyle="bold"
-        android:textColor="@color/colorWhite"
-        android:text="签到"
-        android:background="@color/colorAccent"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/blueButton"
+        android:background="@drawable/shape_back"
+        android:text="签到"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText" />
 </LinearLayout>

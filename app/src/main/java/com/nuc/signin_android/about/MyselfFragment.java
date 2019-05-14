@@ -30,6 +30,8 @@ public class MyselfFragment extends BaseFragment {
     TextView meName;
     @BindView(R.id.me_major)
     TextView meMajor;
+    @BindView(R.id.get_about_identity)
+    TextView aboutIdentity;
     @BindView(R.id.me_login)
     ImageView meLogin;
     @BindView(R.id.logout_btn)
@@ -56,6 +58,7 @@ public class MyselfFragment extends BaseFragment {
                 Log.i(TAG, "onStart: teacher.name = " + name);
                 Log.i(TAG, "onStart: teacher.password = " + password);
                 meName.setText(name);
+                aboutIdentity.setText("老师");
             }
             if ("student".equals(identity)){
                 String name = pref.getString("name",null);
@@ -63,6 +66,7 @@ public class MyselfFragment extends BaseFragment {
                 Log.i(TAG, "onStart: student.name = " + name);
                 Log.i(TAG, "onStart: student.password = " + password);
                 meName.setText(name);
+                aboutIdentity.setText("学生");
             }
         }
         super.onStart();
@@ -75,6 +79,7 @@ public class MyselfFragment extends BaseFragment {
         editor = pref.edit();
         editor.clear();
         editor.apply();
+        aboutIdentity.setText("");
     }
 
     @Override

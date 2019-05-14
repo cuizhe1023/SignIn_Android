@@ -146,10 +146,11 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:background="@color/colorAccent"
+        android:textColor="@color/blueButton"
+        android:background="@drawable/shape_back"
         android:text="创建"
-        android:textColor="#ffff"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="HardcodedText" />
 
 
 </LinearLayout>

@@ -161,19 +161,20 @@
             android:gravity="center_vertical"
             android:singleLine="false"
             android:text=""
+            android:clickable="true"
             android:textColor="#272727"
             android:textSize="16sp"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="KeyboardInaccessibleWidget,RtlHardcoded" />
 
         <Button
             android:id="@+id/download_template_btn"
             android:layout_width="85dp"
+            android:background="@drawable/shape_back"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/download_student_template_list"
             android:layout_alignBottom="@+id/download_student_template_list"
             android:layout_alignParentEnd="true"
-            android:textColor="#ffff"
-            android:background="#dd5555"
+            android:textColor="@color/blueButton"
             android:textStyle="bold"
             android:layout_marginEnd="12dp"
             android:text="下载模板"
@@ -212,10 +213,11 @@
             android:ellipsize="none"
             android:gravity="center_vertical"
             android:singleLine="false"
+            android:clickable="true"
             android:text=""
             android:textColor="#272727"
             android:textSize="16sp"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="KeyboardInaccessibleWidget,RtlHardcoded" />
 
         <Button
             android:id="@+id/select_file_btn"
@@ -224,8 +226,8 @@
             android:layout_alignBaseline="@+id/select_student_list"
             android:layout_alignBottom="@+id/select_student_list"
             android:layout_alignParentEnd="true"
-            android:textColor="#ffff"
-            android:background="#dd5555"
+            android:textColor="@color/blueButton"
+            android:background="@drawable/shape_back"
             android:textStyle="bold"
             android:layout_marginEnd="12dp"
             android:text="选择文件"
@@ -235,11 +237,13 @@
     <Button
         android:id="@+id/upload_btn"
         android:textStyle="bold"
-        android:textColor="#ffff"
-        android:background="#dd5555"
+        android:textColor="@color/blueButton"
+        android:background="@drawable/shape_back"
         android:text="上传学生名单"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         tools:ignore="HardcodedText" />
 
     <TextView
@@ -251,10 +255,12 @@
     <Button
         android:id="@+id/end_class_btn"
         android:textStyle="bold"
-        android:textColor="#ffff"
-        android:background="#dd5555"
+        android:textColor="@color/blueButton"
+        android:background="@drawable/shape_back"
         android:text="结束课程"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         tools:ignore="HardcodedText" />
 </LinearLayout>

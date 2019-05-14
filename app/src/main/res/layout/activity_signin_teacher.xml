@@ -44,22 +44,28 @@
 
         <Button
             android:id="@+id/start_sign_in_btn"
-            android:textColor="@color/colorWhite"
-            android:background="@color/colorAccent"
+            android:textColor="@color/blueButton"
+            android:background="@drawable/shape_back"
             android:text="开始签到"
             android:layout_weight="1"
+            android:layout_marginRight="10dp"
             android:layout_below="@id/appbar_signed"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText,ObsoleteLayoutParam" />
+
+
 
         <Button
             android:id="@+id/end_sign_in_btn"
-            android:textColor="@color/colorWhite"
-            android:background="@color/colorAccent"
+            android:textColor="@color/blueButton"
+            android:background="@drawable/shape_back"
             android:text="结束签到"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText,RtlHardcoded" />
     </LinearLayout>
 
     <LinearLayout
@@ -72,7 +78,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="本机地址：" />
+            android:text="本机地址："
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/tv_localAddress"

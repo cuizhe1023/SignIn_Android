@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:id="@+id/member_student_list"
-        android:background="@color/colorPrimary"
+        android:background="@color/write"
         >
 
         <TextView
@@ -40,9 +40,9 @@
             android:layout_marginTop="18dp"
             android:text=""
             android:textAllCaps="false"
-            android:textColor="#ffff"
+            android:textColor="@color/colorBlack"
             android:textSize="24sp"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
             tools:text="" />
 
         <TextView

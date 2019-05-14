@@ -37,7 +37,8 @@
                 android:layout_height="wrap_content"
                 android:textColorHint="#03A9F4"
                 android:hint="请输入学生学号/老师编号"
-                android:inputType="text" />
+                android:inputType="text"
+                tools:ignore="HardcodedText" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -45,13 +46,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            app:passwordToggleEnabled="true"
             android:layout_marginBottom="8dp">
             <EditText
                 android:id="@+id/user_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="请输入密码"/>
+                android:hint="请输入密码"
+                tools:ignore="HardcodedText" />
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
@@ -71,14 +74,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/LargerPadding"
-                    android:text="老师" />
+                    android:text="老师"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
 
                 <RadioButton
                     android:id="@+id/rdo_btn_student"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/LargerPadding"
-                    android:text="学生" />
+                    android:text="学生"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
 
             </RadioGroup>
         </LinearLayout>
@@ -86,18 +91,18 @@
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_login"
             android:textSize="20sp"
-            android:textColor="#ffff"
+            android:textColor="@color/blueButton"
             android:gravity="center"
             android:text="登录"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@color/colorAccent"
+            android:background="@drawable/shape_back"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@+id/edit_password_login"
             android:layout_alignParentStart="true"
             android:layout_marginTop="13dp"
-            tools:ignore="RtlCompat" />
+            tools:ignore="HardcodedText,ObsoleteLayoutParam,RtlCompat" />
 
         <TextView
             android:id="@+id/link_register"
