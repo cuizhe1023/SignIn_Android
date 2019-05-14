@@ -208,6 +208,8 @@ public class SignInFragment extends BaseFragment implements RapidFloatingActionC
         String url = Constant.URL_STUDENTSIGNIN_DOWNLOADRESULT+"?courseId="+mCourse.getCourseId();
         Log.e(TAG, "onStatisticsClicker: lur = " + url );
 
+        String fileName = mCourse.getClassId()+"-"+mCourse.getCourseName()+".xls";
+
         Request.Builder builder = new Request.Builder();
         Request request = builder.get().url(url).build();
         OkHttpClient mOkHttpClient = new OkHttpClient();
@@ -228,7 +230,7 @@ public class SignInFragment extends BaseFragment implements RapidFloatingActionC
                 InputStream is = response.body() != null ? response.body().byteStream() : null;
                 Log.i(TAG, "onResponse: is = " + is);
                 int len = 0;
-                File file = new File(Environment.getExternalStorageDirectory()+"/download/","test.xls");
+                File file = new File(Environment.getExternalStorageDirectory()+"/download/",fileName);
                 byte[] buf = new byte[1024];
                 Log.i(TAG, "onResponse: file.name = " + file.getName());
                 Log.i(TAG, "onResponse: file.path = " + file.getPath());
